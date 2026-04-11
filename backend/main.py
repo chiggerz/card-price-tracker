@@ -1,5 +1,15 @@
+# IMPORTANT:
+# All imports must use the "backend." package prefix.
+# Do NOT use:
+#   from parser import ...
+#   from matcher import ...
+# Always use:
+#   from backend.parser import parse_card_query
+#   from backend.matcher import match_candidates
+
 from fastapi import FastAPI
 from pydantic import BaseModel
+
 
 from backend.parser import parse_card_query
 from backend.matcher import match_candidates
