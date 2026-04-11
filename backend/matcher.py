@@ -19,6 +19,13 @@ SAMPLE_SOLD_LISTINGS: list[dict[str, Any]] = [
     {
         "title": "2023 Topps Chrome Sapphire Erling Haaland /10",
         "price": 620.00,
+from backend.parser import parse_card_query
+
+
+SAMPLE_SOLD_LISTINGS: list[dict[str, Any]] = [
+    {
+        "title": "2024 Topps Chrome Sapphire Elly De La Cruz Auto /50",
+        "price": 425.00,
         "source": "ebay_sample",
         "sold_date": "2026-03-30",
     },
