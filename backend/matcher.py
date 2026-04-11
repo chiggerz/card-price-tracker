@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from backend.parser import parse_card_query
+
 
 SAMPLE_SOLD_LISTINGS: list[dict[str, Any]] = [
     {
