@@ -85,11 +85,16 @@ def _score_listing(parsed_query: dict[str, Any], listing: dict[str, Any]) -> tup
     reasons: list[str] = []
     flags: dict[str, bool] = {}
 
-    player_match = _contains(title, parsed_query.get("player_name"))
+    query_player = parsed_query.get("player_name")
+    player_match = _contains(title, query_player)
+    flags["has_player_query"] = bool(query_player)
     flags["player_match"] = player_match
+    flags["player_ok"] = query_player is None or player_match
     if player_match:
         score += 40
         reasons.append("player match")
+    elif query_player is None:
+        reasons.append("player unspecified")
     else:
         reasons.append("player mismatch")
 
@@ -105,6 +110,7 @@ def _score_listing(parsed_query: dict[str, Any], listing: dict[str, Any]) -> tup
     subset = parsed_query.get("subset")
     subset_match = bool(subset and _contains(title, subset))
     flags["subset_match"] = subset_match
+    flags["subset_ok"] = subset is None or subset_match
     if subset_match:
         score += 15
         reasons.append("subset match")
@@ -115,6 +121,7 @@ def _score_listing(parsed_query: dict[str, Any], listing: dict[str, Any]) -> tup
     listing_numbering = _extract_numbering(title)
     numbering_match = bool(query_numbering and query_numbering in title)
     flags["numbering_match"] = numbering_match
+    flags["numbering_ok"] = query_numbering is None or numbering_match
     flags["both_numbered"] = bool(query_numbering and listing_numbering)
     flags["different_numbering"] = bool(
         query_numbering and listing_numbering and query_numbering != listing_numbering
@@ -141,32 +148,33 @@ def _score_listing(parsed_query: dict[str, Any], listing: dict[str, Any]) -> tup
 
 def _assign_bucket(flags: dict[str, bool]) -> tuple[str, str]:
     if (
-        flags["player_match"]
+        flags["player_ok"]
         and flags["product_match"]
-        and flags["subset_match"]
-        and flags["numbering_match"]
+        and flags["subset_ok"]
+        and flags["numbering_ok"]
         and flags["auto_match"]
     ):
         return "exact_matches", "Same player/card profile including numbering and auto."
 
     if (
-        flags["player_match"]
+        flags["player_ok"]
         and flags["product_match"]
-        and flags["subset_match"]
+        and flags["subset_ok"]
         and flags["auto_match"]
         and flags["different_numbering"]
     ):
         return "same_player_different_number", "Same player and card type, different serial numbering."
 
-    if flags["player_match"] and (not flags["subset_match"] or not flags["auto_match"]):
+    if flags["player_match"] and (not flags["subset_ok"] or not flags["auto_match"]):
         return "same_player_other_variant", "Same player with nearby variant differences."
 
     if (
-        not flags["player_match"]
+        flags["has_player_query"]
+        and not flags["player_match"]
         and flags["product_match"]
-        and flags["subset_match"]
+        and flags["subset_ok"]
         and flags["auto_match"]
-        and (flags["numbering_match"] or flags["both_numbered"])
+        and (flags["numbering_match"] or flags["both_numbered"] or flags["numbering_ok"])
     ):
         return "different_player_same_card_type", "Different player, but very similar card structure."
 
