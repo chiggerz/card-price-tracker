@@ -35,12 +35,26 @@ def search_cards(payload: SearchRequest) -> dict:
 def search_match(payload: SearchRequest) -> dict:
     parsed_query = parse_card_query(payload.query)
     candidate_results = match_candidates(parsed_query)
-    included_results = [item for item in candidate_results if item["included"]]
-    excluded_results = [item for item in candidate_results if not item["included"]]
+    exact_matches = [item for item in candidate_results if item["bucket"] == "exact_matches"]
+    same_player_different_number = [
+        item for item in candidate_results if item["bucket"] == "same_player_different_number"
+    ]
+    same_player_other_variant = [
+        item for item in candidate_results if item["bucket"] == "same_player_other_variant"
+    ]
+    different_player_same_card_type = [
+        item for item in candidate_results if item["bucket"] == "different_player_same_card_type"
+    ]
+    low_relevance_results = [
+        item for item in candidate_results if item["bucket"] == "low_relevance_results"
+    ]
 
     return {
         "parsed_query": parsed_query,
         "candidate_results": candidate_results,
-        "included_results": included_results,
-        "excluded_results": excluded_results,
+        "exact_matches": exact_matches,
+        "same_player_different_number": same_player_different_number,
+        "same_player_other_variant": same_player_other_variant,
+        "different_player_same_card_type": different_player_same_card_type,
+        "low_relevance_results": low_relevance_results,
     }
