@@ -1,3 +1,4 @@
+
 # IMPORTANT:
 # Use package-based imports (backend.<module>)
 
@@ -5,39 +6,61 @@ from __future__ import annotations
 
 from typing import Any
 
-from backend.parser import parse_card_query
-
 
 SAMPLE_SOLD_LISTINGS: list[dict[str, Any]] = [
     {
-        "title": "2024 Topps Chrome Sapphire Elly De La Cruz Auto /50",
-        "price": 425.00,
+        "title": "2023 Topps Chrome Sapphire Erling Haaland Auto /10",
+        "price": 1850.00,
+        "source": "ebay_sample",
+        "sold_date": "2026-04-03",
+    },
+    {
+        "title": "2023 Topps Chrome Sapphire Erling Haaland Auto /25",
+        "price": 940.00,
+        "source": "ebay_sample",
+        "sold_date": "2026-04-01",
+    },
+    {
+        "title": "2023 Topps Chrome Sapphire Erling Haaland /10",
+        "price": 620.00,
         "source": "ebay_sample",
         "sold_date": "2026-03-30",
     },
     {
-        "title": "2024 Topps Chrome Sapphire Elly De La Cruz Auto /99",
-        "price": 315.00,
+        "title": "2023 Topps Chrome Erling Haaland Auto /10",
+        "price": 980.00,
         "source": "ebay_sample",
-        "sold_date": "2026-03-28",
+        "sold_date": "2026-04-02",
     },
     {
-        "title": "2024 Topps Chrome Sapphire Elly De La Cruz /50",
-        "price": 180.00,
+        "title": "2023 Topps Chrome Sapphire Phil Foden Auto /10",
+        "price": 460.00,
         "source": "ebay_sample",
         "sold_date": "2026-03-29",
     },
     {
-        "title": "2024 Topps Chrome Elly De La Cruz Auto /50",
-        "price": 260.00,
+        "title": "2023 Topps Chrome Bukayo Saka /75",
+        "price": 275.00,
         "source": "ebay_sample",
-        "sold_date": "2026-03-27",
+        "sold_date": "2026-04-04",
     },
     {
-        "title": "2024 Topps Chrome Sapphire Noelvi Marte Auto /50",
-        "price": 120.00,
+        "title": "2023 Topps Chrome Bukayo Saka /99",
+        "price": 190.00,
         "source": "ebay_sample",
-        "sold_date": "2026-03-25",
+        "sold_date": "2026-04-01",
+    },
+    {
+        "title": "2024 Arsenal Team Set Northern Stars",
+        "price": 55.00,
+        "source": "ebay_sample",
+        "sold_date": "2026-03-31",
+    },
+    {
+        "title": "2024 Arsenal Team Set Northern Star",
+        "price": 40.00,
+        "source": "ebay_sample",
+        "sold_date": "2026-03-28",
     },
 ]
 

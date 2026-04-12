@@ -10,7 +10,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-
 from backend.parser import parse_card_query
 from backend.matcher import match_candidates
 
