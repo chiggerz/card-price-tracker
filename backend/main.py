@@ -11,7 +11,12 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from backend.checklists import ChecklistStore
-from backend.ebay_client import EbayConfigurationError, EbayRequestError, search_sold_items
+from backend.ebay_client import (
+    EbayConfigurationError,
+    EbayRequestError,
+    live_data_status_message,
+    search_sold_items,
+)
 from backend.parser import parse_card_query
 from backend.matcher import match_candidates
 
@@ -59,17 +64,24 @@ def empty_grouped_results() -> dict[str, list[dict]]:
 
 
 def fetch_and_match(parsed_query: dict, ebay_query: str) -> tuple[list[dict], str | None]:
+    status_message = live_data_status_message()
     try:
         sold_listings = search_sold_items(ebay_query)
     except EbayConfigurationError as exc:
-        return [], str(exc)
+        return [], status_message or str(exc)
     except EbayRequestError as exc:
-        return [], f"Unable to fetch sold listings from eBay right now. {exc}"
+        base_message = f"Unable to fetch sold listings from eBay right now. {exc}"
+        if status_message:
+            return [], f"{status_message} {base_message}"
+        return [], base_message
 
     candidate_results = match_candidates(parsed_query, sold_listings)
     if not sold_listings:
-        return candidate_results, "No sold/completed eBay listings were found for this query."
-    return candidate_results, None
+        base_message = "No sold/completed listings were found for this query."
+        if status_message:
+            return candidate_results, f"{status_message} {base_message}"
+        return candidate_results, base_message
+    return candidate_results, status_message
 
 
 @app.get("/")
