@@ -4,12 +4,18 @@ import os
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from typing import Any, Protocol
+from urllib.error import URLError
 
 from backend.ebay_client import (
     EbayApiClient,
     EbayConfig,
     EbayConfigurationError,
     EbayRequestError,
+)
+from backend.ebay_scraper import (
+    build_sold_completed_search_url,
+    fetch_sold_completed_html,
+    parse_sold_listing_cards,
 )
 
 
@@ -125,6 +131,54 @@ class EbayBrowseProvider:
         )
 
 
+class EbaySoldScrapeProvider:
+    name = "ebay_sold_scrape"
+
+    def search_sold_items(self, query: str) -> ProviderSearchResult:
+        try:
+            search_url = build_sold_completed_search_url(query)
+            html = fetch_sold_completed_html(search_url)
+            parsed_listings = parse_sold_listing_cards(html)
+        except (URLError, TimeoutError, ValueError) as exc:
+            return ProviderSearchResult(
+                listings=[],
+                provider_name=self.name,
+                message=f"eBay sold/completed scraping request failed: {exc}",
+            )
+        except Exception as exc:
+            return ProviderSearchResult(
+                listings=[],
+                provider_name=self.name,
+                message=f"Unexpected scrape parsing failure: {exc}",
+            )
+
+        listings: list[dict[str, Any]] = []
+        for item in parsed_listings:
+            listings.append(
+                {
+                    "title": item.title,
+                    "price": item.price,
+                    "sold_date": item.sold_date,
+                    "url": item.url,
+                    "image_url": item.image_url,
+                    "source": item.source,
+                    "currency": item.currency,
+                }
+            )
+
+        if not listings:
+            return ProviderSearchResult(
+                listings=[],
+                provider_name=self.name,
+                message=(
+                    "eBay sold/completed scrape succeeded but no listing cards could be normalized "
+                    "from the page response."
+                ),
+            )
+
+        return ProviderSearchResult(listings=listings, provider_name=self.name)
+
+
 class FallbackListingProvider:
     name = "fallback"
 
@@ -189,7 +243,13 @@ def get_listing_provider() -> ListingProvider:
         browse_provider = EbayBrowseProvider(client)
         return FallbackListingProvider(primary=browse_provider, fallback=mock_provider)
 
-    raise EbayConfigurationError("Unsupported LISTING_PROVIDER value. Use 'mock' or 'ebay_browse'.")
+    if provider_name == "ebay_sold_scrape":
+        scrape_provider = EbaySoldScrapeProvider()
+        return FallbackListingProvider(primary=scrape_provider, fallback=mock_provider)
+
+    raise EbayConfigurationError(
+        "Unsupported LISTING_PROVIDER value. Use 'mock', 'ebay_browse', or 'ebay_sold_scrape'."
+    )
 
 
 def live_data_status_message() -> str:
@@ -198,5 +258,10 @@ def live_data_status_message() -> str:
         return (
             "Configured provider: ebay_browse OAuth/Browse scaffold. "
             "Real sold-comps are not implemented through an official supported sold endpoint yet."
+        )
+    if provider_name == "ebay_sold_scrape":
+        return (
+            "Configured provider: ebay_sold_scrape HTML scraping of eBay sold/completed search pages. "
+            "Results may vary if eBay page markup or anti-bot behavior changes."
         )
     return "Configured provider: mock sample data."
