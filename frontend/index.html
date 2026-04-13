@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Card Comp Search</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header>
+        <h1>Guided Card Comp Search</h1>
+        <p class="subtitle">Find comps quickly using set, player, card type, and numbering.</p>
+      </header>
+
+      <section class="search-panel" aria-label="Search form">
+        <div class="field-grid">
+          <label class="field">
+            <span>Set</span>
+            <select id="setSelect">
+              <option value="">Select a set</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Player</span>
+            <input
+              id="playerInput"
+              list="playerOptions"
+              type="text"
+              placeholder="Start typing a player"
+              disabled
+            />
+            <datalist id="playerOptions"></datalist>
+          </label>
+
+          <label class="field">
+            <span>Card type</span>
+            <select id="cardTypeSelect" disabled>
+              <option value="">Select a card type</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Numbering</span>
+            <input id="numberingInput" type="text" placeholder="e.g. /299, #44" />
+          </label>
+        </div>
+
+        <div class="actions">
+          <button id="searchButton" type="button" disabled>Search</button>
+          <span id="formLoading" class="loading hidden" aria-live="polite"></span>
+        </div>
+
+        <p id="formMessage" class="message hidden" aria-live="polite"></p>
+      </section>
+
+      <section id="resultsSection" class="results hidden" aria-live="polite">
+        <h2>Results</h2>
+        <div id="searchSummary" class="summary"></div>
+        <p id="backendMessage" class="backend-message hidden"></p>
+        <div id="groupedResults"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
