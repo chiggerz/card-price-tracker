@@ -27,6 +27,28 @@ pip install -r backend/requirements.txt
 uvicorn backend.main:app --reload
 ```
 
+## Frontend MVP (guided card comp search)
+
+The frontend lives in `frontend/` and is framework-free (HTML/CSS/JS modules).
+
+### Run the frontend locally
+
+```bash
+cd /workspace/card-price-tracker/frontend
+python -m http.server 5173
+```
+
+Open `http://127.0.0.1:5173` in your browser.
+
+### Frontend API base URL
+
+By default, the frontend calls `http://127.0.0.1:8000`.
+
+You can override this either by:
+
+1. Adding `?apiBaseUrl=http://your-host:port` to the page URL, or
+2. Setting `window.__CARD_TRACKER_API_BASE_URL__` before `main.js` loads.
+
 ## Quick API checks
 
 ```bash
