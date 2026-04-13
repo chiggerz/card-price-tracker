@@ -15,7 +15,7 @@ from backend.ebay_client import (
     EbayConfigurationError,
     EbayRequestError,
     live_data_status_message,
-    search_sold_items,
+    search_sold_items_with_status,
 )
 from backend.parser import parse_card_query
 from backend.matcher import match_candidates
@@ -66,7 +66,7 @@ def empty_grouped_results() -> dict[str, list[dict]]:
 def fetch_and_match(parsed_query: dict, ebay_query: str) -> tuple[list[dict], str | None]:
     status_message = live_data_status_message()
     try:
-        sold_listings = search_sold_items(ebay_query)
+        provider_result = search_sold_items_with_status(ebay_query)
     except EbayConfigurationError as exc:
         return [], status_message or str(exc)
     except EbayRequestError as exc:
@@ -75,13 +75,17 @@ def fetch_and_match(parsed_query: dict, ebay_query: str) -> tuple[list[dict], st
             return [], f"{status_message} {base_message}"
         return [], base_message
 
+    sold_listings = provider_result.listings
+    provider_message = provider_result.message
+
     candidate_results = match_candidates(parsed_query, sold_listings)
     if not sold_listings:
         base_message = "No sold/completed listings were found for this query."
-        if status_message:
-            return candidate_results, f"{status_message} {base_message}"
-        return candidate_results, base_message
-    return candidate_results, status_message
+        combined = " ".join(part for part in [status_message, provider_message, base_message] if part)
+        return candidate_results, combined
+
+    combined = " ".join(part for part in [status_message, provider_message] if part)
+    return candidate_results, combined or None
 
 
 @app.get("/")
