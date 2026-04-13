@@ -39,14 +39,14 @@ def list_sets() -> dict[str, list[str]]:
     return {"sets": checklist_store.list_sets()}
 
 
-@app.get("/sets/{set_name}/players")
+@app.get("/players")
 def list_players_for_set(set_name: str) -> dict[str, list[str]]:
     if not checklist_store.has_set(set_name):
         raise HTTPException(status_code=404, detail=f"Unknown set_name: {set_name}")
     return {"set_name": set_name, "players": checklist_store.list_players(set_name)}
 
 
-@app.get("/sets/{set_name}/players/{player_name}/card-types")
+@app.get("/card-types")
 def list_card_types_for_player(set_name: str, player_name: str) -> dict[str, list[str] | str]:
     if not checklist_store.has_set(set_name):
         raise HTTPException(status_code=404, detail=f"Unknown set_name: {set_name}")
