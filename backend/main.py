@@ -40,7 +40,7 @@ def list_sets() -> dict[str, list[str]]:
 
 
 @app.get("/players")
-def list_players_for_set(set_name: str) -> dict[str, list[str]]:
+def list_players_for_set(set_name: str) -> dict[str, str | list[str]]:
     if not checklist_store.has_set(set_name):
         raise HTTPException(status_code=404, detail=f"Unknown set_name: {set_name}")
     return {"set_name": set_name, "players": checklist_store.list_players(set_name)}
