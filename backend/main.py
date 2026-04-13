@@ -12,12 +12,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from backend.checklists import ChecklistStore
-from backend.ebay_client import (
-    EbayConfigurationError,
-    EbayRequestError,
-    live_data_status_message,
-    search_sold_items_with_status,
-)
+from backend.ebay_client import EbayConfigurationError
+from backend.listing_providers import get_listing_provider, live_data_status_message
 from backend.parser import parse_card_query
 from backend.matcher import match_candidates
 
@@ -74,14 +70,10 @@ def empty_grouped_results() -> dict[str, list[dict]]:
 def fetch_and_match(parsed_query: dict, ebay_query: str) -> tuple[list[dict], str | None]:
     status_message = live_data_status_message()
     try:
-        provider_result = search_sold_items_with_status(ebay_query)
+        provider = get_listing_provider()
+        provider_result = provider.search_sold_items(ebay_query)
     except EbayConfigurationError as exc:
         return [], status_message or str(exc)
-    except EbayRequestError as exc:
-        base_message = f"Unable to fetch sold listings from eBay right now. {exc}"
-        if status_message:
-            return [], f"{status_message} {base_message}"
-        return [], base_message
 
     sold_listings = provider_result.listings
     provider_message = provider_result.message
@@ -89,10 +81,23 @@ def fetch_and_match(parsed_query: dict, ebay_query: str) -> tuple[list[dict], st
     candidate_results = match_candidates(parsed_query, sold_listings)
     if not sold_listings:
         base_message = "No sold/completed listings were found for this query."
-        combined = " ".join(part for part in [status_message, provider_message, base_message] if part)
+        combined = " ".join(
+            part
+            for part in [
+                status_message,
+                f"Provider used: {provider_result.provider_name}.",
+                provider_message,
+                base_message,
+            ]
+            if part
+        )
         return candidate_results, combined
 
-    combined = " ".join(part for part in [status_message, provider_message] if part)
+    combined = " ".join(
+        part
+        for part in [status_message, f"Provider used: {provider_result.provider_name}.", provider_message]
+        if part
+    )
     return candidate_results, combined or None
 
 
