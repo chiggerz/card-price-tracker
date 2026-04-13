@@ -1,4 +1,3 @@
-
 # IMPORTANT:
 # Use package-based imports (backend.<module>)
 
@@ -6,64 +5,6 @@ from __future__ import annotations
 
 from typing import Any
 import re
-
-
-SAMPLE_SOLD_LISTINGS: list[dict[str, Any]] = [
-    {
-        "title": "2023 Topps Chrome Sapphire Erling Haaland Auto /10",
-        "price": 1850.00,
-        "source": "ebay_sample",
-        "sold_date": "2026-04-03",
-    },
-    {
-        "title": "2023 Topps Chrome Sapphire Erling Haaland Auto /25",
-        "price": 940.00,
-        "source": "ebay_sample",
-        "sold_date": "2026-04-01",
-    },
-    {
-        "title": "2023 Topps Chrome Sapphire Erling Haaland /10",
-        "price": 620.00,
-        "source": "ebay_sample",
-        "sold_date": "2026-03-30",
-    },
-    {
-        "title": "2023 Topps Chrome Erling Haaland Auto /10",
-        "price": 980.00,
-        "source": "ebay_sample",
-        "sold_date": "2026-04-02",
-    },
-    {
-        "title": "2023 Topps Chrome Sapphire Phil Foden Auto /10",
-        "price": 460.00,
-        "source": "ebay_sample",
-        "sold_date": "2026-03-29",
-    },
-    {
-        "title": "2023 Topps Chrome Bukayo Saka /75",
-        "price": 275.00,
-        "source": "ebay_sample",
-        "sold_date": "2026-04-04",
-    },
-    {
-        "title": "2023 Topps Chrome Bukayo Saka /99",
-        "price": 190.00,
-        "source": "ebay_sample",
-        "sold_date": "2026-04-01",
-    },
-    {
-        "title": "2024 Arsenal Team Set Northern Stars",
-        "price": 55.00,
-        "source": "ebay_sample",
-        "sold_date": "2026-03-31",
-    },
-    {
-        "title": "2024 Arsenal Team Set Northern Star",
-        "price": 40.00,
-        "source": "ebay_sample",
-        "sold_date": "2026-03-28",
-    },
-]
 
 
 def _contains(haystack: str, needle: str | None) -> bool:
@@ -181,16 +122,20 @@ def _assign_bucket(flags: dict[str, bool]) -> tuple[str, str]:
     return "low_relevance_results", "Weaker match, retained as a fallback comp."
 
 
-def match_candidates(parsed_query: dict[str, Any]) -> list[dict[str, Any]]:
+def match_candidates(parsed_query: dict[str, Any], sold_listings: list[dict[str, Any]]) -> list[dict[str, Any]]:
     results: list[dict[str, Any]] = []
 
-    for listing in SAMPLE_SOLD_LISTINGS:
+    for listing in sold_listings:
         relevance_score, score_reason, flags = _score_listing(parsed_query, listing)
         bucket, bucket_reason = _assign_bucket(flags)
         results.append(
             {
                 "title": listing["title"],
                 "price": listing["price"],
+                "source": listing.get("source"),
+                "sold_date": listing.get("sold_date"),
+                "url": listing.get("url"),
+                "currency": listing.get("currency"),
                 "relevance_score": relevance_score,
                 "bucket": bucket,
                 "reason": f"{bucket_reason} ({score_reason})",

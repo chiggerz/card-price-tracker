@@ -11,6 +11,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from backend.checklists import ChecklistStore
+from backend.ebay_client import EbayConfigurationError, EbayRequestError, search_sold_items
 from backend.parser import parse_card_query
 from backend.matcher import match_candidates
 
@@ -45,6 +46,30 @@ def group_candidate_results(candidate_results: list[dict]) -> dict[str, list[dic
             item for item in candidate_results if item["bucket"] == "low_relevance_results"
         ],
     }
+
+
+def empty_grouped_results() -> dict[str, list[dict]]:
+    return {
+        "exact_matches": [],
+        "same_player_different_number": [],
+        "same_player_other_variant": [],
+        "different_player_same_card_type": [],
+        "low_relevance_results": [],
+    }
+
+
+def fetch_and_match(parsed_query: dict, ebay_query: str) -> tuple[list[dict], str | None]:
+    try:
+        sold_listings = search_sold_items(ebay_query)
+    except EbayConfigurationError as exc:
+        return [], str(exc)
+    except EbayRequestError as exc:
+        return [], f"Unable to fetch sold listings from eBay right now. {exc}"
+
+    candidate_results = match_candidates(parsed_query, sold_listings)
+    if not sold_listings:
+        return candidate_results, "No sold/completed eBay listings were found for this query."
+    return candidate_results, None
 
 
 @app.get("/")
@@ -89,14 +114,18 @@ def search_cards(payload: SearchRequest) -> dict:
 @app.post("/search/match")
 def search_match(payload: SearchRequest) -> dict:
     parsed_query = parse_card_query(payload.query)
-    candidate_results = match_candidates(parsed_query)
-    grouped_results = group_candidate_results(candidate_results)
+    candidate_results, message = fetch_and_match(parsed_query, payload.query)
 
-    return {
+    grouped_results = group_candidate_results(candidate_results) if candidate_results else empty_grouped_results()
+
+    response = {
         "parsed_query": parsed_query,
         "candidate_results": candidate_results,
         **grouped_results,
     }
+    if message:
+        response["message"] = message
+    return response
 
 
 @app.post("/search/structured")
@@ -133,11 +162,14 @@ def search_structured(payload: StructuredSearchRequest) -> dict:
         "is_auto": "auto" in payload.card_type.lower() or bool(parsed_from_text.get("is_auto")),
     }
 
-    candidate_results = match_candidates(parsed_query)
-    grouped_results = group_candidate_results(candidate_results)
+    candidate_results, message = fetch_and_match(parsed_query, normalized_query)
+    grouped_results = group_candidate_results(candidate_results) if candidate_results else empty_grouped_results()
 
-    return {
+    response = {
         "normalized_query": normalized_query,
         "parsed_query": parsed_query,
         **grouped_results,
     }
+    if message:
+        response["message"] = message
+    return response
