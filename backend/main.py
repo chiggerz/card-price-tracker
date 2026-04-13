@@ -124,11 +124,14 @@ def search_structured(payload: StructuredSearchRequest) -> dict:
         query_parts.append(payload.numbering)
     normalized_query = " ".join(part.strip() for part in query_parts if part and part.strip())
 
-    parsed_query = parse_card_query(normalized_query)
-    parsed_query["player_name"] = payload.player_name
-    parsed_query["product"] = payload.set_name
-    parsed_query["subset"] = None if payload.card_type.lower() == "base" else payload.card_type
-    parsed_query["numbering"] = payload.numbering
+    parsed_from_text = parse_card_query(normalized_query)
+    parsed_query = {
+        "player_name": payload.player_name,
+        "product": payload.set_name,
+        "subset": None if payload.card_type.lower() == "base" else payload.card_type,
+        "numbering": payload.numbering,
+        "is_auto": "auto" in payload.card_type.lower() or bool(parsed_from_text.get("is_auto")),
+    }
 
     candidate_results = match_candidates(parsed_query)
     grouped_results = group_candidate_results(candidate_results)
