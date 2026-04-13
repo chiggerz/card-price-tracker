@@ -7,22 +7,59 @@
 #   from backend.parser import parse_card_query
 #   from backend.matcher import match_candidates
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
+from backend.checklists import ChecklistStore
 from backend.parser import parse_card_query
 from backend.matcher import match_candidates
 
 app = FastAPI()
+checklist_store = ChecklistStore.from_file()
 
 
 class SearchRequest(BaseModel):
     query: str
 
 
+class StructuredSearchRequest(BaseModel):
+    set_name: str
+    player_name: str
+    card_type: str
+    numbering: str | None = None
+
+
 @app.get("/")
 def read_root() -> dict[str, str]:
     return {"status": "running"}
+
+
+@app.get("/sets")
+def list_sets() -> dict[str, list[str]]:
+    return {"sets": checklist_store.list_sets()}
+
+
+@app.get("/sets/{set_name}/players")
+def list_players_for_set(set_name: str) -> dict[str, list[str]]:
+    if not checklist_store.has_set(set_name):
+        raise HTTPException(status_code=404, detail=f"Unknown set_name: {set_name}")
+    return {"set_name": set_name, "players": checklist_store.list_players(set_name)}
+
+
+@app.get("/sets/{set_name}/players/{player_name}/card-types")
+def list_card_types_for_player(set_name: str, player_name: str) -> dict[str, list[str] | str]:
+    if not checklist_store.has_set(set_name):
+        raise HTTPException(status_code=404, detail=f"Unknown set_name: {set_name}")
+    if not checklist_store.has_player(set_name, player_name):
+        raise HTTPException(
+            status_code=404,
+            detail=f"Unknown player_name '{player_name}' for set '{set_name}'",
+        )
+    return {
+        "set_name": set_name,
+        "player_name": player_name,
+        "card_types": checklist_store.list_card_types(set_name, player_name),
+    }
 
 
 @app.post("/search")
@@ -57,4 +94,44 @@ def search_match(payload: SearchRequest) -> dict:
         "same_player_other_variant": same_player_other_variant,
         "different_player_same_card_type": different_player_same_card_type,
         "low_relevance_results": low_relevance_results,
+    }
+
+
+@app.post("/search/structured")
+def search_structured(payload: StructuredSearchRequest) -> dict:
+    if not checklist_store.has_set(payload.set_name):
+        raise HTTPException(status_code=404, detail=f"Unknown set_name: {payload.set_name}")
+
+    if not checklist_store.has_player(payload.set_name, payload.player_name):
+        raise HTTPException(
+            status_code=404,
+            detail=f"Unknown player_name '{payload.player_name}' for set '{payload.set_name}'",
+        )
+
+    if not checklist_store.has_card_type(payload.set_name, payload.player_name, payload.card_type):
+        raise HTTPException(
+            status_code=404,
+            detail=(
+                f"Unknown card_type '{payload.card_type}' for player '{payload.player_name}' "
+                f"in set '{payload.set_name}'"
+            ),
+        )
+
+    query_parts = [payload.player_name, payload.set_name, payload.card_type]
+    if payload.numbering:
+        query_parts.append(payload.numbering)
+    normalized_query = " ".join(part.strip() for part in query_parts if part and part.strip())
+
+    parsed_query = parse_card_query(normalized_query)
+    parsed_query["player_name"] = payload.player_name
+    parsed_query["product"] = payload.set_name
+    parsed_query["subset"] = None if payload.card_type.lower() == "base" else payload.card_type
+    parsed_query["numbering"] = payload.numbering
+
+    candidate_results = match_candidates(parsed_query)
+
+    return {
+        "normalized_query": normalized_query,
+        "parsed_query": parsed_query,
+        "candidate_results": candidate_results,
     }
