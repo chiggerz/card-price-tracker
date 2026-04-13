@@ -1,0 +1,1625 @@
+{
+  "sets": {
+    "Topps Chrome Premier League 25/26": {
+      "players": {
+        "Justin Kluivert": [
+          "Base",
+          "Golazo"
+        ],
+        "Tyler Adams": [
+          "Base",
+          "That's His Job"
+        ],
+        "Antoine Semenyo": [
+          "Base",
+          "Locked In",
+          "Give Him His Flowers",
+          "Clinical Chrome"
+        ],
+        "David Brooks": [
+          "Base"
+        ],
+        "Julio Soler": [
+          "Base",
+          "Monday Night Lights"
+        ],
+        "Bafod\u00e9 Diakit\u00e9": [
+          "Base"
+        ],
+        "Eli Junior Kroupi": [
+          "Base",
+          "Lightning Chrome"
+        ],
+        "Evanilson": [
+          "Base",
+          "Monday Night Lights"
+        ],
+        "Ben Gannon Doak": [
+          "Base"
+        ],
+        "Adrien Truffert": [
+          "Base"
+        ],
+        "Eberechi Eze": [
+          "Base",
+          "Autograph",
+          "Genius Chrome",
+          "Triple Platinum",
+          "Monday Night Lights"
+        ],
+        "Martin \u00d8degaard": [
+          "Base",
+          "Autograph",
+          "Superstar Sensations Autograph",
+          "Helix",
+          "Genius Chrome",
+          "Triple Platinum"
+        ],
+        "Bukayo Saka": [
+          "Base",
+          "Autograph",
+          "Superstar Sensations Autograph",
+          "Alive And Kicking",
+          "Locked In",
+          "Chrome Anime",
+          "Helix",
+          "Genius Chrome",
+          "Triple Platinum",
+          "Black Edge Chrome"
+        ],
+        "Declan Rice": [
+          "Base",
+          "Autograph",
+          "Superstar Sensations Autograph",
+          "Stoppage Time Heartbreaker",
+          "A Cold And Rainy Night In Chrome",
+          "Triple Platinum"
+        ],
+        "Viktor Gy\u00f6keres": [
+          "Base",
+          "Autograph",
+          "Locked In",
+          "Chrome Anime",
+          "Triple Platinum",
+          "Clinical Chrome",
+          "Black Edge Chrome"
+        ],
+        "Gabriel Magalh\u00e3es": [
+          "Base",
+          "Give Him His Flowers"
+        ],
+        "David Raya": [
+          "Base",
+          "Winner's Enclosure Autograph",
+          "Winner's Enclosure"
+        ],
+        "Mart\u00edn Zubimendi": [
+          "Base",
+          "Autograph"
+        ],
+        "Ethan Nwaneri": [
+          "Base",
+          "Monday Night Lights"
+        ],
+        "Myles Lewis-Skelly": [
+          "Base",
+          "Zero Hours On-Card Autograph",
+          "Lightning Chrome"
+        ],
+        "Ben Broggio": [
+          "Base",
+          "Autograph",
+          "Retro Rookies Autograph"
+        ],
+        "Morgan Rogers": [
+          "Base",
+          "Autograph",
+          "Cold Battle Frozenfractor On-Card Autograph",
+          "Chrome Anime",
+          "Triple Platinum",
+          "Monday Night Lights"
+        ],
+        "Ollie Watkins": [
+          "Base",
+          "Autograph",
+          "That's His Job",
+          "A Cold And Rainy Night In Chrome",
+          "Clinical Chrome",
+          "Black Edge Chrome"
+        ],
+        "Amadou Onana": [
+          "Base"
+        ],
+        "Youri Tielemans": [
+          "Base",
+          "Autograph",
+          "Locked In",
+          "Give Him His Flowers"
+        ],
+        "John McGinn": [
+          "Base"
+        ],
+        "Rory Wilson": [
+          "Base"
+        ],
+        "Evann Guessand": [
+          "Base",
+          "Monday Night Lights"
+        ],
+        "Bradley Burrowes": [
+          "Base"
+        ],
+        "Jamaldeen Jimoh-Aloba": [
+          "Base"
+        ],
+        "Gustavo Nunes": [
+          "Base",
+          "Locked In",
+          "Monday Night Lights",
+          "Lightning Chrome"
+        ],
+        "Michael Kayode": [
+          "Base"
+        ],
+        "Mikkel Damsgaard": [
+          "Base",
+          "Genius Chrome"
+        ],
+        "Kevin Schade": [
+          "Base",
+          "Autograph"
+        ],
+        "Dango Ouattara": [
+          "Base"
+        ],
+        "Nathan Collins": [
+          "Base",
+          "That's His Job"
+        ],
+        "Romelle Donovan": [
+          "Base"
+        ],
+        "Sepp van den Berg": [
+          "Base"
+        ],
+        "Jordan Henderson": [
+          "Base"
+        ],
+        "Antoni Milambo": [
+          "Base"
+        ],
+        "Brajan Gruda": [
+          "Base"
+        ],
+        "Stefanos Tzimas": [
+          "Base",
+          "Locked In",
+          "Clinical Chrome",
+          "Monday Night Lights"
+        ],
+        "Yasin Ayari": [
+          "Base",
+          "Autograph"
+        ],
+        "Tom Watson": [
+          "Base",
+          "Autograph"
+        ],
+        "Kaoru Mitoma": [
+          "Base",
+          "Golazo",
+          "A Cold And Rainy Night In Chrome",
+          "Chrome Anime",
+          "Triple Platinum",
+          "Lightning Chrome"
+        ],
+        "Carlos Baleba": [
+          "Base",
+          "Give Him His Flowers"
+        ],
+        "Yankuba Minteh": [
+          "Base",
+          "Autograph",
+          "Monday Night Lights"
+        ],
+        "Georginio Rutter": [
+          "Base",
+          "Autograph",
+          "Alive And Kicking"
+        ],
+        "Harry Howell": [
+          "Base",
+          "Black Edge Chrome"
+        ],
+        "Charalampos Kostoulas": [
+          "Base",
+          "Locked In"
+        ],
+        "Maxime Est\u00e8ve": [
+          "Base",
+          "That's His Job"
+        ],
+        "Marcus Edwards": [
+          "Base",
+          "Autograph",
+          "Lightning Chrome"
+        ],
+        "Loum Tchaouna": [
+          "Base"
+        ],
+        "Jaidon Anthony": [
+          "Base"
+        ],
+        "Jaydon Banel": [
+          "Base"
+        ],
+        "Josh Cullen": [
+          "Base"
+        ],
+        "Hannibal": [
+          "Base",
+          "Monday Night Lights"
+        ],
+        "Bashir Humphreys": [
+          "Base"
+        ],
+        "Quilindschy Hartman": [
+          "Base"
+        ],
+        "Zian Flemming": [
+          "Base",
+          "Locked In",
+          "Clinical Chrome"
+        ],
+        "Jo\u00e3o Pedro": [
+          "Base",
+          "Autograph",
+          "Locked In"
+        ],
+        "Liam Delap": [
+          "Base",
+          "Clinical Chrome"
+        ],
+        "Cole Palmer": [
+          "Base",
+          "Autograph",
+          "Superstar Sensations Autograph",
+          "Cold Battle Frozenfractor On-Card Autograph",
+          "Stoppage Time Heartbreaker",
+          "Chrome Anime",
+          "Helix",
+          "Genius Chrome",
+          "Triple Platinum",
+          "Lightning Chrome"
+        ],
+        "Shumaira Mheuka": [
+          "Base",
+          "Autograph"
+        ],
+        "Jorrel Hato": [
+          "Base"
+        ],
+        "Enzo Fern\u00e1ndez": [
+          "Base",
+          "Triple Platinum",
+          "Monday Night Lights"
+        ],
+        "Mois\u00e9s Caicedo": [
+          "Base",
+          "That's His Job",
+          "Triple Platinum"
+        ],
+        "Est\u00eav\u00e3o Willian": [
+          "Base",
+          "Autograph",
+          "Retro Rookies Autograph",
+          "Alive And Kicking",
+          "Locked In",
+          "A Cold And Rainy Night In Chrome",
+          "Helix",
+          "Triple Platinum",
+          "Monday Night Lights",
+          "Black Edge Chrome"
+        ],
+        "Harrison Murray-Campbell": [
+          "Base",
+          "Autograph",
+          "Black Edge Chrome"
+        ],
+        "Tyrique George": [
+          "Base"
+        ],
+        "Justin Devenny": [
+          "Base"
+        ],
+        "Romain Esse": [
+          "Base",
+          "Autograph",
+          "Locked In",
+          "Black Edge Chrome"
+        ],
+        "Yeremy Pino": [
+          "Base"
+        ],
+        "Isma\u00efla Sarr": [
+          "Base",
+          "Monday Night Lights"
+        ],
+        "Jean-Philippe Mateta": [
+          "Base",
+          "That's His Job",
+          "Locked In",
+          "Clinical Chrome",
+          "Monday Night Lights"
+        ],
+        "Chris Richards": [
+          "Base",
+          "Autograph"
+        ],
+        "Adam Wharton": [
+          "Base",
+          "Autograph",
+          "Black Edge Chrome"
+        ],
+        "Maxence Lacroix": [
+          "Base"
+        ],
+        "Daichi Kamada": [
+          "Base",
+          "Lightning Chrome"
+        ],
+        "Daniel Mu\u00f1oz": [
+          "Base",
+          "Give Him His Flowers"
+        ],
+        "Charly Alcaraz": [
+          "Base"
+        ],
+        "Iliman Ndiaye": [
+          "Base",
+          "Autograph",
+          "Alive And Kicking",
+          "Give Him His Flowers"
+        ],
+        "Dwight McNeil": [
+          "Base",
+          "Monday Night Lights"
+        ],
+        "Jordan Pickford": [
+          "Base"
+        ],
+        "Jarrad Branthwaite": [
+          "Base",
+          "Lightning Chrome"
+        ],
+        "James Garner": [
+          "Base"
+        ],
+        "Jack Grealish": [
+          "Base",
+          "Autograph",
+          "Superstar Sensations Autograph",
+          "Black Edge Chrome"
+        ],
+        "Tyler Dibling": [
+          "Base",
+          "Autograph",
+          "Alive And Kicking"
+        ],
+        "Thierno Barry": [
+          "Base",
+          "Locked In"
+        ],
+        "Beto": [
+          "Base",
+          "Clinical Chrome"
+        ],
+        "Josh King": [
+          "Base",
+          "Locked In"
+        ],
+        "Emile Smith Rowe": [
+          "Base",
+          "Autograph",
+          "Locked In"
+        ],
+        "Ra\u00fal Jim\u00e9nez": [
+          "Base",
+          "That's His Job",
+          "Clinical Chrome"
+        ],
+        "Alex Iwobi": [
+          "Base",
+          "Stoppage Time Heartbreaker",
+          "Genius Chrome"
+        ],
+        "Rodrigo Muniz": [
+          "Base",
+          "Stoppage Time Heartbreaker"
+        ],
+        "Adama Traor\u00e9": [
+          "Base",
+          "Monday Night Lights",
+          "Lightning Chrome"
+        ],
+        "Harry Wilson": [
+          "Base"
+        ],
+        "Jonah Kusi-Asare": [
+          "Base"
+        ],
+        "Kevin": [
+          "Base"
+        ],
+        "Antonee Robinson": [
+          "Base",
+          "Alive And Kicking",
+          "Black Edge Chrome"
+        ],
+        "Ilia Gruev": [
+          "Base"
+        ],
+        "Jaka Bijol": [
+          "Base"
+        ],
+        "Harry Gray": [
+          "Base",
+          "Autograph",
+          "Retro Rookies Autograph",
+          "Alive And Kicking",
+          "Locked In"
+        ],
+        "Dominic Calvert-Lewin": [
+          "Base"
+        ],
+        "Brenden Aaronson": [
+          "Base",
+          "Chrome Anime"
+        ],
+        "Wilfried Gnonto": [
+          "Base"
+        ],
+        "Ao Tanaka": [
+          "Base",
+          "Black Edge Chrome"
+        ],
+        "Jayden Bogle": [
+          "Base",
+          "Autograph",
+          "Monday Night Lights"
+        ],
+        "Jo\u00ebl Piroe": [
+          "Base",
+          "Clinical Chrome"
+        ],
+        "Anton Stach": [
+          "Base",
+          "That's His Job"
+        ],
+        "Milos Kerkez": [
+          "Base",
+          "Autograph"
+        ],
+        "Rio Ngumoha": [
+          "Base",
+          "Autograph",
+          "Retro Rookies Autograph",
+          "Locked In",
+          "A Cold And Rainy Night In Chrome",
+          "Helix",
+          "Black Edge Chrome"
+        ],
+        "Trent Kon\u00e9-Doherty": [
+          "Base",
+          "Autograph",
+          "Retro Rookies Autograph"
+        ],
+        "Jeremie Frimpong": [
+          "Base"
+        ],
+        "Alexis Mac Allister": [
+          "Base",
+          "Give Him His Flowers",
+          "Genius Chrome",
+          "Triple Platinum"
+        ],
+        "Virgil van Dijk": [
+          "Base",
+          "Autograph",
+          "Superstar Sensations Autograph",
+          "That's His Job",
+          "Chrome Anime",
+          "Triple Platinum"
+        ],
+        "Alexander Isak": [
+          "Base",
+          "Autograph",
+          "Locked In",
+          "Chrome Anime",
+          "Helix",
+          "Triple Platinum",
+          "Clinical Chrome"
+        ],
+        "Mohamed Salah": [
+          "Base",
+          "Autograph",
+          "Winner's Enclosure Autograph",
+          "Superstar Sensations Autograph",
+          "Zero Hours On-Card Autograph",
+          "Alive And Kicking",
+          "A Cold And Rainy Night In Chrome",
+          "Winner's Enclosure",
+          "Helix",
+          "Genius Chrome",
+          "Triple Platinum",
+          "Clinical Chrome",
+          "Lightning Chrome",
+          "Black Edge Chrome"
+        ],
+        "Florian Wirtz": [
+          "Base",
+          "Autograph",
+          "Locked In",
+          "Triple Platinum",
+          "Black Edge Chrome"
+        ],
+        "Hugo Ekitike": [
+          "Base",
+          "Autograph",
+          "A Cold And Rainy Night In Chrome",
+          "Clinical Chrome"
+        ],
+        "Omar Marmoush": [
+          "Base",
+          "Alive And Kicking",
+          "Lightning Chrome",
+          "Black Edge Chrome"
+        ],
+        "Tijjani Reijnders": [
+          "Base",
+          "A Cold And Rainy Night In Chrome"
+        ],
+        "Bernardo Silva": [
+          "Base"
+        ],
+        "Phil Foden": [
+          "Base",
+          "Autograph",
+          "Superstar Sensations Autograph",
+          "A Cold And Rainy Night In Chrome",
+          "Genius Chrome",
+          "Triple Platinum"
+        ],
+        "Erling Haaland": [
+          "Base",
+          "Autograph",
+          "Superstar Sensations Autograph",
+          "That's His Job",
+          "A Cold And Rainy Night In Chrome",
+          "Chrome Anime",
+          "Helix",
+          "Triple Platinum",
+          "Clinical Chrome",
+          "Lightning Chrome",
+          "Black Edge Chrome"
+        ],
+        "Rayan Cherki": [
+          "Base",
+          "Genius Chrome",
+          "Monday Night Lights"
+        ],
+        "Rodri": [
+          "Base",
+          "Alive And Kicking",
+          "Locked In",
+          "Helix",
+          "Triple Platinum"
+        ],
+        "Divine Mukasa": [
+          "Base",
+          "Autograph",
+          "Retro Rookies Autograph",
+          "Locked In",
+          "Monday Night Lights"
+        ],
+        "Reigan Heskey": [
+          "Base",
+          "Locked In"
+        ],
+        "Nico O'Reilly": [
+          "Base"
+        ],
+        "Bryan Mbeumo": [
+          "Base",
+          "Autograph",
+          "A Cold And Rainy Night In Chrome"
+        ],
+        "Amir Ibragimov": [
+          "Base"
+        ],
+        "S\u00e9kou Kon\u00e9": [
+          "Base"
+        ],
+        "Matheus Cunha": [
+          "Base",
+          "Autograph",
+          "Superstar Sensations Autograph",
+          "Zero Hours On-Card Autograph",
+          "Chrome Anime",
+          "Genius Chrome",
+          "Triple Platinum"
+        ],
+        "Bruno Fernandes": [
+          "Base",
+          "Autograph",
+          "Superstar Sensations Autograph",
+          "Zero Hours On-Card Autograph",
+          "That's His Job",
+          "Locked In",
+          "Helix",
+          "Genius Chrome",
+          "Triple Platinum",
+          "Black Edge Chrome"
+        ],
+        "Amad": [
+          "Base",
+          "Alive And Kicking"
+        ],
+        "Benjamin \u0160e\u0161ko": [
+          "Base",
+          "Superstar Sensations Autograph",
+          "Triple Platinum",
+          "Clinical Chrome",
+          "Black Edge Chrome"
+        ],
+        "Shea Lacey": [
+          "Base",
+          "Autograph",
+          "Locked In"
+        ],
+        "Bendito Mantato": [
+          "Base"
+        ],
+        "Chido Obi": [
+          "Base"
+        ],
+        "Yoane Wissa": [
+          "Base",
+          "Give Him His Flowers",
+          "Clinical Chrome"
+        ],
+        "Dan Burn": [
+          "Base",
+          "That's His Job"
+        ],
+        "Bruno Guimar\u00e3es": [
+          "Base",
+          "Autograph",
+          "Zero Hours On-Card Autograph",
+          "Locked In",
+          "Triple Platinum",
+          "Black Edge Chrome"
+        ],
+        "Anthony Gordon": [
+          "Base",
+          "Autograph",
+          "Superstar Sensations Autograph",
+          "Locked In",
+          "A Cold And Rainy Night In Chrome",
+          "Lightning Chrome"
+        ],
+        "Nick Woltemade": [
+          "Base"
+        ],
+        "Joelinton": [
+          "Base",
+          "Alive And Kicking"
+        ],
+        "Sandro Tonali": [
+          "Base",
+          "Monday Night Lights"
+        ],
+        "Seung-Soo Park": [
+          "Base"
+        ],
+        "Anthony Elanga": [
+          "Base",
+          "Autograph",
+          "Lightning Chrome"
+        ],
+        "Tino Livramento": [
+          "Base",
+          "Autograph"
+        ],
+        "Igor Jesus": [
+          "Base",
+          "Locked In"
+        ],
+        "Callum Hudson-Odoi": [
+          "Base",
+          "Autograph",
+          "Monday Night Lights"
+        ],
+        "Dan Ndoye": [
+          "Base"
+        ],
+        "Morgan Gibbs-White": [
+          "Base",
+          "A Cold And Rainy Night In Chrome",
+          "Black Edge Chrome"
+        ],
+        "Murillo": [
+          "Base",
+          "Locked In",
+          "Black Edge Chrome"
+        ],
+        "James McAtee": [
+          "Base"
+        ],
+        "Zach Abbott": [
+          "Base",
+          "Autograph",
+          "Retro Rookies Autograph"
+        ],
+        "Chris Wood": [
+          "Base",
+          "Autograph",
+          "That's His Job",
+          "Give Him His Flowers",
+          "Triple Platinum",
+          "Clinical Chrome"
+        ],
+        "Jair": [
+          "Base",
+          "Monday Night Lights"
+        ],
+        "Omari Hutchinson": [
+          "Base"
+        ],
+        "Noah Sadiki": [
+          "Base"
+        ],
+        "Eliezer Mayenda": [
+          "Base",
+          "Locked In",
+          "Black Edge Chrome"
+        ],
+        "Chris Rigg": [
+          "Base",
+          "Autograph",
+          "Alive And Kicking",
+          "Locked In",
+          "A Cold And Rainy Night In Chrome",
+          "Monday Night Lights",
+          "Black Edge Chrome"
+        ],
+        "Habib Diarra": [
+          "Base",
+          "That's His Job"
+        ],
+        "Dan Ballard": [
+          "Base"
+        ],
+        "Wilson Isidor": [
+          "Base",
+          "Clinical Chrome"
+        ],
+        "Enzo Le F\u00e9e": [
+          "Base",
+          "Monday Night Lights"
+        ],
+        "Simon Adingra": [
+          "Base",
+          "Lightning Chrome"
+        ],
+        "Granit Xhaka": [
+          "Base",
+          "Autograph"
+        ],
+        "Chemsdine Talbi": [
+          "Base"
+        ],
+        "Cristian Romero": [
+          "Base",
+          "Autograph",
+          "Superstar Sensations Autograph"
+        ],
+        "Randal Kolo Muani": [
+          "Base",
+          "Autograph"
+        ],
+        "Richarlison": [
+          "Base",
+          "Locked In"
+        ],
+        "Micky van de Ven": [
+          "Base",
+          "Lightning Chrome"
+        ],
+        "Xavi Simons": [
+          "Base",
+          "Autograph",
+          "Locked In"
+        ],
+        "Mohammed Kudus": [
+          "Base",
+          "Autograph",
+          "Superstar Sensations Autograph",
+          "Locked In",
+          "A Cold And Rainy Night In Chrome"
+        ],
+        "K\u014dta Takai": [
+          "Base"
+        ],
+        "Brennan Johnson": [
+          "Base",
+          "Monday Night Lights"
+        ],
+        "Archie Gray": [
+          "Base",
+          "Alive And Kicking"
+        ],
+        "Lucas Bergvall": [
+          "Base"
+        ],
+        "El Hadji Malick Diouf": [
+          "Base",
+          "Autograph",
+          "Black Edge Chrome"
+        ],
+        "Jarrod Bowen": [
+          "Base",
+          "Autograph",
+          "Superstar Sensations Autograph",
+          "Genius Chrome",
+          "Triple Platinum"
+        ],
+        "Mateus Fernandes": [
+          "Base",
+          "Monday Night Lights"
+        ],
+        "Igor Julio": [
+          "Base"
+        ],
+        "Luis Guilherme": [
+          "Base",
+          "Locked In"
+        ],
+        "Freddie Potts": [
+          "Base"
+        ],
+        "Lucas Paquet\u00e1": [
+          "Base",
+          "Autograph",
+          "Genius Chrome",
+          "Monday Night Lights"
+        ],
+        "Tom\u00e1\u0161 Sou\u010dek": [
+          "Base"
+        ],
+        "Ollie Scarles": [
+          "Base"
+        ],
+        "Aaron Wan-Bissaka": [
+          "Base",
+          "Give Him His Flowers"
+        ],
+        "Tolu Arokodare": [
+          "Base",
+          "Locked In"
+        ],
+        "Andr\u00e9": [
+          "Base",
+          "Alive And Kicking"
+        ],
+        "J\u00f8rgen Strand Larsen": [
+          "Base",
+          "Autograph",
+          "Zero Hours On-Card Autograph",
+          "That's His Job",
+          "Clinical Chrome"
+        ],
+        "Jo\u00e3o Gomes": [
+          "Base",
+          "That's His Job",
+          "Monday Night Lights"
+        ],
+        "Jhon Arias": [
+          "Base",
+          "Monday Night Lights"
+        ],
+        "Hwang Hee-Chan": [
+          "Base",
+          "Locked In"
+        ],
+        "Fer L\u00f3pez": [
+          "Base",
+          "Lightning Chrome"
+        ],
+        "Emmanuel Agbadou": [
+          "Base"
+        ],
+        "Jos\u00e9 S\u00e1": [
+          "Base"
+        ],
+        "Rodrigo Gomes": [
+          "Base"
+        ],
+        "Max Dowman": [
+          "Base",
+          "Autograph"
+        ],
+        "Andy Cole": [
+          "Autograph",
+          "Golazo",
+          "Clinical Chrome",
+          "Black Edge Chrome"
+        ],
+        "Alan Shearer": [
+          "Autograph",
+          "A Cold And Rainy Night In Chrome",
+          "Clinical Chrome",
+          "Black Edge Chrome"
+        ],
+        "Dimitar Berbatov": [
+          "Autograph",
+          "Genius Chrome"
+        ],
+        "Clint Dempsey": [
+          "Autograph",
+          "Black Edge Chrome"
+        ],
+        "Cesc F\u00e0bregas": [
+          "Autograph",
+          "A Cold And Rainy Night In Chrome",
+          "Genius Chrome"
+        ],
+        "Cody Gakpo": [
+          "Autograph"
+        ],
+        "Joe Cole": [
+          "Autograph",
+          "Black Edge Chrome"
+        ],
+        "Claude Mak\u00e9l\u00e9l\u00e9": [
+          "Autograph",
+          "Give Him His Flowers"
+        ],
+        "Carlos Tevez": [
+          "Autograph",
+          "Give Him His Flowers",
+          "Black Edge Chrome"
+        ],
+        "Didier Drogba": [
+          "Autograph",
+          "Clinical Chrome",
+          "Black Edge Chrome"
+        ],
+        "Dennis Bergkamp": [
+          "Autograph",
+          "Golazo",
+          "Genius Chrome"
+        ],
+        "Duncan Ferguson": [
+          "Autograph",
+          "Locked In",
+          "Black Edge Chrome"
+        ],
+        "David Silva": [
+          "Autograph",
+          "Genius Chrome"
+        ],
+        "Dwight Yorke": [
+          "Autograph"
+        ],
+        "Eric Cantona": [
+          "Autograph",
+          "Golazo",
+          "Locked In",
+          "Black Edge Chrome"
+        ],
+        "Emiliano Mart\u00ednez": [
+          "Autograph"
+        ],
+        "Faustino Asprilla": [
+          "Autograph",
+          "The Streets Won't Forget"
+        ],
+        "Frank Lampard": [
+          "Autograph",
+          "Locked In",
+          "Lightning Chrome"
+        ],
+        "Robbie Fowler": [
+          "Autograph",
+          "Golazo"
+        ],
+        "Fernando Torres": [
+          "Autograph",
+          "Clinical Chrome",
+          "Black Edge Chrome"
+        ],
+        "Gabriel Agbonlahor": [
+          "Autograph",
+          "The Streets Won't Forget",
+          "Lightning Chrome"
+        ],
+        "Gareth Bale": [
+          "Autograph",
+          "Zero Hours On-Card Autograph",
+          "Stoppage Time Heartbreaker",
+          "Golazo",
+          "Locked In",
+          "Lightning Chrome",
+          "Black Edge Chrome"
+        ],
+        "Petr \u010cech": [
+          "Autograph"
+        ],
+        "Gustavo Poyet": [
+          "Autograph"
+        ],
+        "Ryan Giggs": [
+          "Autograph",
+          "Lightning Chrome"
+        ],
+        "Gianfranco Zola": [
+          "Autograph"
+        ],
+        "Harry Kane": [
+          "Autograph",
+          "Golazo",
+          "A Cold And Rainy Night In Chrome",
+          "Clinical Chrome"
+        ],
+        "Heung-Min Son": [
+          "Autograph",
+          "Genius Chrome",
+          "Black Edge Chrome"
+        ],
+        "Jamie Carragher": [
+          "Autograph"
+        ],
+        "Jermain Defoe": [
+          "Autograph",
+          "Zero Hours On-Card Autograph",
+          "Give Him His Flowers",
+          "Clinical Chrome"
+        ],
+        "Jacob Ramsey": [
+          "Autograph"
+        ],
+        "John Terry": [
+          "Autograph"
+        ],
+        "Kanu": [
+          "Autograph",
+          "Golazo"
+        ],
+        "Kevin De Bruyne": [
+          "Autograph"
+        ],
+        "Les Ferdinand": [
+          "Autograph",
+          "Black Edge Chrome"
+        ],
+        "Lewis Hall": [
+          "Autograph"
+        ],
+        "Freddie Ljungberg": [
+          "Autograph"
+        ],
+        "Luka Modri\u0107": [
+          "Autograph"
+        ],
+        "Luis Su\u00e1rez": [
+          "Autograph",
+          "Golazo",
+          "Locked In",
+          "Genius Chrome"
+        ],
+        "Mikel Arteta": [
+          "Autograph"
+        ],
+        "Marc Guiu": [
+          "Autograph"
+        ],
+        "Mark Noble": [
+          "Autograph"
+        ],
+        "Jos\u00e9 Mourinho": [
+          "Autograph"
+        ],
+        "Manuel Ugarte": [
+          "Autograph"
+        ],
+        "Neville Southall": [
+          "Autograph"
+        ],
+        "Nikola Milenkovi\u0107": [
+          "Autograph"
+        ],
+        "Gary Neville": [
+          "Autograph"
+        ],
+        "Pep Guardiola": [
+          "Autograph"
+        ],
+        "Patrick Kluivert": [
+          "Autograph"
+        ],
+        "Paul Scholes": [
+          "Autograph",
+          "Stoppage Time Heartbreaker",
+          "A Cold And Rainy Night In Chrome",
+          "Black Edge Chrome"
+        ],
+        "Patrick Vieira": [
+          "Autograph",
+          "Locked In"
+        ],
+        "Rio Ferdinand": [
+          "Autograph",
+          "Lightning Chrome"
+        ],
+        "Raphinha": [
+          "Autograph"
+        ],
+        "Roy Keane": [
+          "Autograph",
+          "Locked In"
+        ],
+        "Robert Pir\u00e8s": [
+          "Autograph",
+          "Golazo",
+          "Give Him His Flowers"
+        ],
+        "Robin van Persie": [
+          "Autograph",
+          "Stoppage Time Heartbreaker"
+        ],
+        "Sergio Ag\u00fcero": [
+          "Autograph",
+          "Stoppage Time Heartbreaker",
+          "Clinical Chrome"
+        ],
+        "Sir Alex Ferguson": [
+          "Autograph"
+        ],
+        "Steven Gerrard": [
+          "Autograph",
+          "Stoppage Time Heartbreaker",
+          "Locked In",
+          "A Cold And Rainy Night In Chrome",
+          "Lightning Chrome"
+        ],
+        "Peter Schmeichel": [
+          "Autograph"
+        ],
+        "Dominic Solanke": [
+          "Autograph"
+        ],
+        "Thierry Henry": [
+          "Autograph",
+          "Zero Hours On-Card Autograph",
+          "Golazo",
+          "A Cold And Rainy Night In Chrome",
+          "Genius Chrome",
+          "Clinical Chrome",
+          "Black Edge Chrome"
+        ],
+        "Wayne Rooney": [
+          "Autograph",
+          "Zero Hours On-Card Autograph",
+          "Golazo",
+          "A Cold And Rainy Night In Chrome",
+          "Genius Chrome",
+          "Clinical Chrome",
+          "Black Edge Chrome"
+        ],
+        "Yaya Tour\u00e9": [
+          "Autograph",
+          "Locked In"
+        ],
+        "Zlatan Ibrahimovi\u0107": [
+          "Autograph",
+          "Black Edge Chrome"
+        ],
+        "Stiliyan Petrov/Gareth Barry": [
+          "Dual Autograph"
+        ],
+        "Andy Cole/Dwight Yorke": [
+          "Dual Autograph"
+        ],
+        "Jermain Defoe/Robbie Keane": [
+          "Dual Autograph"
+        ],
+        "Clint Dempsey/Brian McBride": [
+          "Dual Autograph"
+        ],
+        "Steven Gerrard/Xabi Alonso": [
+          "Dual Autograph"
+        ],
+        "Jack Grealish/Tyler Dibling": [
+          "Dual Autograph"
+        ],
+        "Anthony Gordon/Anthony Elanga": [
+          "Dual Autograph"
+        ],
+        "Gabriel Magalh\u00e3es/William Saliba": [
+          "Dual Autograph"
+        ],
+        "Fernando Torres/Steven Gerrard": [
+          "Dual Autograph"
+        ],
+        "Sergio Ag\u00fcero/Erling Haaland": [
+          "Dual Autograph"
+        ],
+        "Dennis Bergkamp/Thierry Henry": [
+          "Dual Autograph"
+        ],
+        "Cody Gakpo/Dirk Kuyt": [
+          "Dual Autograph"
+        ],
+        "Harry Kane/Heung-Min Son": [
+          "Dual Autograph"
+        ],
+        "Harrison Murray-Campbell/Shumaira Mheuka": [
+          "Dual Autograph"
+        ],
+        "Claude Mak\u00e9l\u00e9l\u00e9/Michael Essien": [
+          "Dual Autograph"
+        ],
+        "Sir Alex Ferguson/Jos\u00e9 Mourinho": [
+          "Dual Autograph"
+        ],
+        "Mark Noble/Jarrod Bowen": [
+          "Dual Autograph"
+        ],
+        "Wayne Rooney/Duncan Ferguson": [
+          "Dual Autograph"
+        ],
+        "Wayne Rooney/Robin van Persie": [
+          "Dual Autograph"
+        ],
+        "Bukayo Saka/Thierry Henry": [
+          "Dual Autograph"
+        ],
+        "Ethan Nwaneri/Myles Lewis-Skelly": [
+          "Dual Autograph"
+        ],
+        "David Silva/Bernardo Silva": [
+          "Dual Autograph"
+        ],
+        "Frank Lampard/John Terry": [
+          "Dual Autograph"
+        ],
+        "Patrick Vieira/Declan Rice": [
+          "Dual Autograph"
+        ],
+        "Yannick Bolasie/Wilfried Zaha": [
+          "Dual Autograph"
+        ],
+        "Heung-Min Son/Gareth Bale/Harry Kane": [
+          "Triple Autograph"
+        ],
+        "John Terry/Didier Drogba/Frank Lampard": [
+          "Triple Autograph"
+        ],
+        "Ei\u00f0ur Gu\u00f0johnsen/Gianfranco Zola/Jimmy-Floyd Hasselbaink": [
+          "Triple Autograph"
+        ],
+        "Ian Wright/Thierry Henry/Dennis Bergkamp": [
+          "Triple Autograph"
+        ],
+        "Roy Keane/Eric Cantona/Ryan Giggs": [
+          "Triple Autograph"
+        ],
+        "Matheus Cunha/Bruno Fernandes/Bryan Mbeumo": [
+          "Triple Autograph"
+        ],
+        "Luis Su\u00e1rez/Steven Gerrard/Mohamed Salah": [
+          "Triple Autograph"
+        ],
+        "Stuart Pearce/Teddy Sheringham/Roy Keane": [
+          "Triple Autograph"
+        ],
+        "Viktor Gy\u00f6keres/Declan Rice/Bukayo Saka": [
+          "Triple Autograph"
+        ],
+        "Patrick Vieira/Robert Pir\u00e8s/Freddie Ljungberg": [
+          "Triple Autograph"
+        ],
+        "David Silva/Yaya Tour\u00e9/Sergio Ag\u00fcero": [
+          "Triple Autograph"
+        ],
+        "Gabriel Agbonlahor/Dwight Yorke/Ollie Watkins": [
+          "Triple Autograph"
+        ],
+        "Matz Sels": [
+          "Winner's Enclosure Autograph",
+          "Winner's Enclosure"
+        ],
+        "David Raya (Joint Golden Glove Winner)/Matz Sels (Joint Golden Glove Winner)/Mohamed Saleh (Golden Boot and Playmaker Winner)": [
+          "Winner's Enclosure Autograph"
+        ],
+        "Cole Palmer/Erling Haaland/Bruno Fernandes/Mohamed Salah": [
+          "Kings Of The Premier League Quad Autograph"
+        ],
+        "Matthijs De Ligt": [
+          "Superstar Sensations Autograph"
+        ],
+        "Tosin Adarabioyo": [
+          "Zero Hours On-Card Autograph"
+        ],
+        "Cole Palmer/Morgan Rogers": [
+          "Cold Battle Frozenfractor On-Card Dual Autograph"
+        ],
+        "Harry Kewell": [
+          "The Streets Won't Forget"
+        ],
+        "Ei\u00f0ur Gu\u00f0johnsen": [
+          "The Streets Won't Forget"
+        ],
+        "Elano": [
+          "The Streets Won't Forget"
+        ],
+        "Aaron Lennon": [
+          "The Streets Won't Forget"
+        ],
+        "Yakubu": [
+          "The Streets Won't Forget"
+        ],
+        "Andy Johnson": [
+          "The Streets Won't Forget"
+        ],
+        "Papiss Ciss\u00e9": [
+          "The Streets Won't Forget"
+        ],
+        "Yannick Bolasie": [
+          "The Streets Won't Forget"
+        ],
+        "Bobby Zamora": [
+          "The Streets Won't Forget"
+        ],
+        "Niko Kranj\u010dar": [
+          "The Streets Won't Forget"
+        ],
+        "Stephen Ireland": [
+          "The Streets Won't Forget"
+        ],
+        "John Arne Riise": [
+          "The Streets Won't Forget"
+        ],
+        "Nolberto Solano": [
+          "The Streets Won't Forget"
+        ],
+        "Zolt\u00e1n Gera": [
+          "The Streets Won't Forget"
+        ],
+        "Abou Diaby": [
+          "The Streets Won't Forget"
+        ],
+        "Georgi Kinkladze": [
+          "The Streets Won't Forget",
+          "Golazo"
+        ],
+        "Tony Yeboah": [
+          "The Streets Won't Forget",
+          "Golazo"
+        ],
+        "Kevin Phillips": [
+          "The Streets Won't Forget",
+          "Clinical Chrome"
+        ],
+        "Harvey Elliott": [
+          "Alive And Kicking"
+        ],
+        "Dominik Szoboszlai": [
+          "Alive And Kicking",
+          "Monday Night Lights"
+        ],
+        "Noni Madueke": [
+          "Alive And Kicking"
+        ],
+        "Reece James": [
+          "Alive And Kicking"
+        ],
+        "Ola Aina": [
+          "Alive And Kicking"
+        ],
+        "Lewis Dunk": [
+          "That's His Job"
+        ],
+        "William Saliba": [
+          "That's His Job"
+        ],
+        "James Tarkowski": [
+          "That's His Job",
+          "Golazo"
+        ],
+        "Jo\u00e3o Palhinha": [
+          "That's His Job"
+        ],
+        "Stan Collymore": [
+          "Stoppage Time Heartbreaker"
+        ],
+        "Reiss Nelson": [
+          "Stoppage Time Heartbreaker"
+        ],
+        "Alisson": [
+          "Stoppage Time Heartbreaker"
+        ],
+        "Steve Bruce": [
+          "Stoppage Time Heartbreaker"
+        ],
+        "Oscar Bobb": [
+          "Stoppage Time Heartbreaker"
+        ],
+        "Michael Owen": [
+          "Stoppage Time Heartbreaker"
+        ],
+        "Sadio Man\u00e9": [
+          "Stoppage Time Heartbreaker",
+          "Give Him His Flowers"
+        ],
+        "Dirk Kuyt": [
+          "Stoppage Time Heartbreaker",
+          "Give Him His Flowers"
+        ],
+        "Federico Macheda": [
+          "Stoppage Time Heartbreaker"
+        ],
+        "Danny Welbeck": [
+          "Stoppage Time Heartbreaker"
+        ],
+        "Dejan Kulusevski": [
+          "Stoppage Time Heartbreaker"
+        ],
+        "Kobbie Mainoo": [
+          "Golazo"
+        ],
+        "Gus Poyet": [
+          "Golazo"
+        ],
+        "Philippe Albert": [
+          "Golazo"
+        ],
+        "Olivier Giroud": [
+          "Golazo"
+        ],
+        "Gianluigi Donnarumma": [
+          "Locked In"
+        ],
+        "Josh Acheampong": [
+          "Locked In"
+        ],
+        "Eden Hazard": [
+          "Locked In",
+          "Genius Chrome",
+          "Black Edge Chrome"
+        ],
+        "Rayan A\u00eft-Nouri": [
+          "Locked In"
+        ],
+        "Michael Essien": [
+          "A Cold And Rainy Night In Chrome"
+        ],
+        "N'Golo Kant\u00e9": [
+          "A Cold And Rainy Night In Chrome"
+        ],
+        "Nani": [
+          "Give Him His Flowers"
+        ],
+        "Antonio Valencia": [
+          "Give Him His Flowers"
+        ],
+        "Wilfried Zaha": [
+          "Give Him His Flowers"
+        ],
+        "Ramires": [
+          "Give Him His Flowers"
+        ],
+        "Harvey Barnes": [
+          "Give Him His Flowers"
+        ],
+        "Gilberto Silva": [
+          "Give Him His Flowers"
+        ],
+        "Leighton Baines": [
+          "Give Him His Flowers"
+        ],
+        "Michael Carrick": [
+          "Give Him His Flowers"
+        ],
+        "J\u00e9r\u00e9my Doku": [
+          "Give Him His Flowers"
+        ],
+        "Premier League Trophy": [
+          "Premier League Trophy"
+        ],
+        "Santi Cazorla": [
+          "Genius Chrome"
+        ],
+        "Philippe Coutinho": [
+          "Genius Chrome"
+        ],
+        "Niclas F\u00fcllkrug": [
+          "Clinical Chrome"
+        ],
+        "Lewis Miley": [
+          "Monday Night Lights"
+        ],
+        "Curtis Jones": [
+          "Monday Night Lights"
+        ],
+        "Yehor Yarmolyuk": [
+          "Monday Night Lights"
+        ],
+        "Joachim Andersen": [
+          "Monday Night Lights"
+        ],
+        "Adam Aznou": [
+          "Monday Night Lights"
+        ],
+        "Leny Yoro": [
+          "Monday Night Lights"
+        ],
+        "Patrick Dorgu": [
+          "Monday Night Lights"
+        ],
+        "Jamie Gittens": [
+          "Monday Night Lights"
+        ],
+        "Sean Longstaff": [
+          "Monday Night Lights"
+        ],
+        "Kyle Walker": [
+          "Monday Night Lights",
+          "Lightning Chrome",
+          "Black Edge Chrome"
+        ],
+        "Gabriel Martinelli": [
+          "Lightning Chrome"
+        ],
+        "Donyell Malen": [
+          "Lightning Chrome",
+          "Black Edge Chrome"
+        ],
+        "Daniel James": [
+          "Lightning Chrome"
+        ],
+        "Arjen Robben": [
+          "Lightning Chrome"
+        ],
+        "Elliot Anderson": [
+          "Lightning Chrome"
+        ],
+        "Emile Heskey": [
+          "Lightning Chrome"
+        ],
+        "Crysencio Summerville": [
+          "Black Edge Chrome"
+        ],
+        "Kevin Doyle": [
+          "Black Edge Chrome"
+        ],
+        "Jimmy Floyd Hasselbaink": [
+          "Black Edge Chrome"
+        ],
+        "Dion Dublin": [
+          "Black Edge Chrome"
+        ],
+        "Igor Thiago": [
+          "Black Edge Chrome"
+        ],
+        "Jaap Stam": [
+          "Black Edge Chrome"
+        ],
+        "Ian Wright": [
+          "Black Edge Chrome"
+        ]
+      }
+    }
+  }
+}
