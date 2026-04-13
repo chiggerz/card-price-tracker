@@ -8,6 +8,7 @@
 #   from backend.matcher import match_candidates
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from backend.checklists import ChecklistStore
@@ -21,6 +22,13 @@ from backend.parser import parse_card_query
 from backend.matcher import match_candidates
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 checklist_store = ChecklistStore.from_file()
 
 
