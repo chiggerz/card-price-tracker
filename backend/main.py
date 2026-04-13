@@ -29,6 +29,24 @@ class StructuredSearchRequest(BaseModel):
     numbering: str | None = None
 
 
+def group_candidate_results(candidate_results: list[dict]) -> dict[str, list[dict]]:
+    return {
+        "exact_matches": [item for item in candidate_results if item["bucket"] == "exact_matches"],
+        "same_player_different_number": [
+            item for item in candidate_results if item["bucket"] == "same_player_different_number"
+        ],
+        "same_player_other_variant": [
+            item for item in candidate_results if item["bucket"] == "same_player_other_variant"
+        ],
+        "different_player_same_card_type": [
+            item for item in candidate_results if item["bucket"] == "different_player_same_card_type"
+        ],
+        "low_relevance_results": [
+            item for item in candidate_results if item["bucket"] == "low_relevance_results"
+        ],
+    }
+
+
 @app.get("/")
 def read_root() -> dict[str, str]:
     return {"status": "running"}
@@ -72,28 +90,12 @@ def search_cards(payload: SearchRequest) -> dict:
 def search_match(payload: SearchRequest) -> dict:
     parsed_query = parse_card_query(payload.query)
     candidate_results = match_candidates(parsed_query)
-    exact_matches = [item for item in candidate_results if item["bucket"] == "exact_matches"]
-    same_player_different_number = [
-        item for item in candidate_results if item["bucket"] == "same_player_different_number"
-    ]
-    same_player_other_variant = [
-        item for item in candidate_results if item["bucket"] == "same_player_other_variant"
-    ]
-    different_player_same_card_type = [
-        item for item in candidate_results if item["bucket"] == "different_player_same_card_type"
-    ]
-    low_relevance_results = [
-        item for item in candidate_results if item["bucket"] == "low_relevance_results"
-    ]
+    grouped_results = group_candidate_results(candidate_results)
 
     return {
         "parsed_query": parsed_query,
         "candidate_results": candidate_results,
-        "exact_matches": exact_matches,
-        "same_player_different_number": same_player_different_number,
-        "same_player_other_variant": same_player_other_variant,
-        "different_player_same_card_type": different_player_same_card_type,
-        "low_relevance_results": low_relevance_results,
+        **grouped_results,
     }
 
 
@@ -129,9 +131,10 @@ def search_structured(payload: StructuredSearchRequest) -> dict:
     parsed_query["numbering"] = payload.numbering
 
     candidate_results = match_candidates(parsed_query)
+    grouped_results = group_candidate_results(candidate_results)
 
     return {
         "normalized_query": normalized_query,
         "parsed_query": parsed_query,
-        "candidate_results": candidate_results,
+        **grouped_results,
     }
