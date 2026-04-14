@@ -135,21 +135,22 @@ class EbaySoldScrapeProvider:
     name = "ebay_sold_scrape"
 
     def search_sold_items(self, query: str) -> ProviderSearchResult:
+        search_url = "unavailable"
         try:
             search_url = build_sold_completed_search_url(query)
             html = fetch_sold_completed_html(search_url)
-            parse_result = parse_sold_listing_cards_with_context(html)
+            parse_result = parse_sold_listing_cards_with_context(html, fetched_url=search_url)
         except (URLError, TimeoutError, ValueError) as exc:
             return ProviderSearchResult(
                 listings=[],
                 provider_name=self.name,
-                message=f"eBay sold/completed scraping request failed: {exc}",
+                message=f"eBay sold/completed scraping request failed for URL {search_url}: {exc}",
             )
         except Exception as exc:
             return ProviderSearchResult(
                 listings=[],
                 provider_name=self.name,
-                message=f"Unexpected scrape parsing failure: {exc}",
+                message=f"Unexpected scrape parsing failure for URL {search_url}: {exc}",
             )
 
         listings: list[dict[str, Any]] = []
@@ -171,11 +172,15 @@ class EbaySoldScrapeProvider:
             if parse_result.debug_html_path
             else ""
         )
+        url_suffix = f" Fetched URL: {search_url}."
         if parse_result.page_kind in {"anti_bot", "consent", "non_results"}:
             return ProviderSearchResult(
                 listings=[],
                 provider_name=self.name,
-                message=f"eBay sold/completed scrape did not return a usable results page: {parse_result.summary}.{debug_suffix}",
+                message=(
+                    "eBay sold/completed scrape did not return a usable results page: "
+                    f"{parse_result.summary}.{url_suffix}{debug_suffix}"
+                ),
             )
 
         if not listings:
@@ -185,7 +190,7 @@ class EbaySoldScrapeProvider:
                 message=(
                     "eBay sold/completed scrape fetched a likely results page but parsing failed to "
                     f"normalize listing cards. Classification={parse_result.page_kind}; "
-                    f"context={parse_result.summary}.{debug_suffix}"
+                    f"context={parse_result.summary}.{url_suffix}{debug_suffix}"
                 ),
             )
 
