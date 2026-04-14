@@ -15,7 +15,7 @@ from backend.ebay_client import (
 from backend.ebay_scraper import (
     build_sold_completed_search_url,
     fetch_sold_completed_html,
-    parse_sold_listing_cards,
+    parse_sold_listing_cards_with_context,
 )
 
 
@@ -138,7 +138,7 @@ class EbaySoldScrapeProvider:
         try:
             search_url = build_sold_completed_search_url(query)
             html = fetch_sold_completed_html(search_url)
-            parsed_listings = parse_sold_listing_cards(html)
+            parse_result = parse_sold_listing_cards_with_context(html)
         except (URLError, TimeoutError, ValueError) as exc:
             return ProviderSearchResult(
                 listings=[],
@@ -153,7 +153,7 @@ class EbaySoldScrapeProvider:
             )
 
         listings: list[dict[str, Any]] = []
-        for item in parsed_listings:
+        for item in parse_result.listings:
             listings.append(
                 {
                     "title": item.title,
@@ -166,13 +166,26 @@ class EbaySoldScrapeProvider:
                 }
             )
 
+        debug_suffix = (
+            f" Debug HTML saved to: {parse_result.debug_html_path}."
+            if parse_result.debug_html_path
+            else ""
+        )
+        if parse_result.page_kind in {"anti_bot", "consent", "non_results"}:
+            return ProviderSearchResult(
+                listings=[],
+                provider_name=self.name,
+                message=f"eBay sold/completed scrape did not return a usable results page: {parse_result.summary}.{debug_suffix}",
+            )
+
         if not listings:
             return ProviderSearchResult(
                 listings=[],
                 provider_name=self.name,
                 message=(
-                    "eBay sold/completed scrape succeeded but no listing cards could be normalized "
-                    "from the page response."
+                    "eBay sold/completed scrape fetched a likely results page but parsing failed to "
+                    f"normalize listing cards. Classification={parse_result.page_kind}; "
+                    f"context={parse_result.summary}.{debug_suffix}"
                 ),
             )
 

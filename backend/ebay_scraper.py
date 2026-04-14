@@ -2,9 +2,14 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from html.parser import HTMLParser
+from pathlib import Path
 from urllib.parse import quote_plus
 from urllib.request import Request, urlopen
+import hashlib
+import logging
+import os
 import re
+from datetime import UTC, datetime
 
 
 @dataclass(frozen=True)
@@ -16,6 +21,14 @@ class EbayScrapedListing:
     image_url: str | None
     source: str
     currency: str
+
+
+@dataclass(frozen=True)
+class EbayPageParseResult:
+    listings: list[EbayScrapedListing]
+    page_kind: str
+    summary: str
+    debug_html_path: str | None = None
 
 
 class _EbaySoldItemsParser(HTMLParser):
@@ -141,12 +154,102 @@ def _normalize_sold_date(sold_date_text: str | None) -> str | None:
     return normalized or None
 
 
-def parse_sold_listing_cards(html: str) -> list[EbayScrapedListing]:
+def _classify_page_kind(html: str) -> tuple[str, str]:
+    lower = html.lower()
+    if "captcha" in lower or "robot check" in lower or "automated access" in lower:
+        return "anti_bot", "eBay returned an anti-bot / CAPTCHA challenge page."
+    if "consent" in lower and ("gdpr" in lower or "privacy" in lower):
+        return "consent", "eBay returned a consent/privacy interstitial page."
+    if "ebay" not in lower or "<html" not in lower:
+        return "non_results", "Response does not appear to be a normal eBay HTML page."
+    if (
+        "no exact matches found" in lower
+        or "0 results for" in lower
+        or "did not match any items" in lower
+    ):
+        return "empty_results", "eBay results page indicates no sold/completed matches."
+    if "s-item" in lower or "srp-results" in lower or "_item" in lower:
+        return "results", "Detected eBay results-page markers."
+    return "unknown_ebay", "Detected eBay page, but results markup markers were not found."
+
+
+def _save_debug_html(html: str, reason: str) -> str | None:
+    enabled = os.getenv("EBAY_SCRAPER_DEBUG_HTML", "1").strip().lower() not in {"0", "false", "no"}
+    if not enabled:
+        return None
+
+    debug_dir = Path(os.getenv("EBAY_SCRAPER_DEBUG_DIR", ".debug/ebay_scrape_html"))
+    debug_dir.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+    digest = hashlib.sha1(html.encode("utf-8", errors="ignore")).hexdigest()[:10]
+    reason_slug = re.sub(r"[^a-z0-9]+", "-", reason.lower()).strip("-") or "parse-failure"
+    file_path = debug_dir / f"{timestamp}-{reason_slug}-{digest}.html"
+    file_path.write_text(html, encoding="utf-8")
+    return str(file_path)
+
+
+def _extract_raw_cards(html: str) -> list[dict[str, str]]:
     parser = _EbaySoldItemsParser()
     parser.feed(html)
+    cards = parser.results
+    if cards:
+        return cards
 
+    fallback_cards: list[dict[str, str]] = []
+    card_patterns = [
+        r"<li[^>]+class=\"[^\"]*\bs-item\b[^\"]*\"[^>]*>.*?</li>",
+        r"<div[^>]+class=\"[^\"]*\bs-item__wrapper\b[^\"]*\"[^>]*>.*?</div>",
+    ]
+    for pattern in card_patterns:
+        for match in re.finditer(pattern, html, flags=re.IGNORECASE | re.DOTALL):
+            block = match.group(0)
+            title_match = re.search(
+                r'class="[^"]*s-item__title[^"]*"[^>]*>(.*?)<',
+                block,
+                flags=re.IGNORECASE | re.DOTALL,
+            )
+            price_match = re.search(
+                r'class="[^"]*s-item__price[^"]*"[^>]*>(.*?)<',
+                block,
+                flags=re.IGNORECASE | re.DOTALL,
+            )
+            href_match = re.search(
+                r'class="[^"]*s-item__link[^"]*"[^>]*href="([^"]+)"',
+                block,
+                flags=re.IGNORECASE,
+            )
+            sold_match = re.search(
+                r'(?:sold|ended)\s+(?:on\s+)?([A-Za-z]{3,9}\s+\d{1,2},?\s+\d{4})',
+                block,
+                flags=re.IGNORECASE,
+            )
+            image_match = re.search(
+                r'<img[^>]+(?:src|data-src|data-lazy)="([^"]+)"',
+                block,
+                flags=re.IGNORECASE,
+            )
+            item: dict[str, str] = {}
+            if title_match:
+                item["title"] = re.sub(r"<[^>]+>", " ", title_match.group(1)).strip()
+            if price_match:
+                item["price_text"] = re.sub(r"<[^>]+>", " ", price_match.group(1)).strip()
+            if href_match:
+                item["url"] = href_match.group(1).strip()
+            if sold_match:
+                item["sold_date"] = sold_match.group(1).strip()
+            if image_match:
+                item["image_url"] = image_match.group(1).strip()
+            if item:
+                fallback_cards.append(item)
+        if fallback_cards:
+            break
+
+    return fallback_cards
+
+
+def parse_sold_listing_cards(html: str) -> list[EbayScrapedListing]:
     normalized: list[EbayScrapedListing] = []
-    for item in parser.results:
+    for item in _extract_raw_cards(html):
         title = item.get("title", "").strip()
         if not title or title.lower() in {"shop on ebay", "new listing"}:
             continue
@@ -168,3 +271,29 @@ def parse_sold_listing_cards(html: str) -> list[EbayScrapedListing]:
         )
 
     return normalized
+
+
+def parse_sold_listing_cards_with_context(html: str) -> EbayPageParseResult:
+    page_kind, summary = _classify_page_kind(html)
+    listings = parse_sold_listing_cards(html)
+    debug_html_path: str | None = None
+
+    if page_kind == "results" and not listings:
+        debug_html_path = _save_debug_html(html, reason="results-no-normalized-cards")
+    elif page_kind in {"unknown_ebay", "anti_bot", "consent", "non_results"}:
+        debug_html_path = _save_debug_html(html, reason=page_kind)
+
+    logging.getLogger(__name__).info(
+        "eBay scrape page classification=%s listings=%d debug_html_path=%s summary=%s",
+        page_kind,
+        len(listings),
+        debug_html_path,
+        summary,
+    )
+
+    return EbayPageParseResult(
+        listings=listings,
+        page_kind=page_kind,
+        summary=summary,
+        debug_html_path=debug_html_path,
+    )
