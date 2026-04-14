@@ -84,6 +84,7 @@ Expected behavior:
 - response buckets remain same shape as existing `/search/match` behavior
 - each result preserves existing fields and may include `image_url` when available
 - if scraping fails or no cards are parsed, response message explains the issue and provider falls back to mock sold listings
+- when eBay returns an unexpected page shape (or parsing yields zero listings), scraper may write debug HTML to `.debug/ebay_scrape_html/` for local inspection; disable with `EBAY_SCRAPER_DEBUG_HTML=0` or change path with `EBAY_SCRAPER_DEBUG_DIR`
 
 ### eBay Browse scaffold mode
 
