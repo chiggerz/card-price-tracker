@@ -29,6 +29,7 @@ class EbayPageParseResult:
     page_kind: str
     summary: str
     debug_html_path: str | None = None
+    fetched_url: str | None = None
 
 
 class _EbaySoldItemsParser(HTMLParser):
@@ -107,7 +108,14 @@ class _EbaySoldItemsParser(HTMLParser):
 
 def build_sold_completed_search_url(query: str) -> str:
     encoded_query = quote_plus(query.strip())
-    return f"https://www.ebay.com/sch/i.html?_nkw={encoded_query}&LH_Sold=1&LH_Complete=1"
+    return (
+        "https://www.ebay.com/sch/i.html"
+        f"?_nkw={encoded_query}"
+        "&LH_Sold=1"
+        "&LH_Complete=1"
+        "&_sop=13"
+        "&rt=nc"
+    )
 
 
 def fetch_sold_completed_html(search_url: str, timeout_seconds: int = 15) -> str:
@@ -273,20 +281,21 @@ def parse_sold_listing_cards(html: str) -> list[EbayScrapedListing]:
     return normalized
 
 
-def parse_sold_listing_cards_with_context(html: str) -> EbayPageParseResult:
+def parse_sold_listing_cards_with_context(html: str, fetched_url: str | None = None) -> EbayPageParseResult:
     page_kind, summary = _classify_page_kind(html)
     listings = parse_sold_listing_cards(html)
     debug_html_path: str | None = None
 
     if page_kind == "results" and not listings:
         debug_html_path = _save_debug_html(html, reason="results-no-normalized-cards")
-    elif page_kind in {"unknown_ebay", "anti_bot", "consent", "non_results"}:
+    elif page_kind in {"empty_results", "unknown_ebay", "anti_bot", "consent", "non_results"}:
         debug_html_path = _save_debug_html(html, reason=page_kind)
 
     logging.getLogger(__name__).info(
-        "eBay scrape page classification=%s listings=%d debug_html_path=%s summary=%s",
+        "eBay scrape classification=%s listings=%d url=%s debug_html_path=%s summary=%s",
         page_kind,
         len(listings),
+        fetched_url,
         debug_html_path,
         summary,
     )
@@ -296,4 +305,5 @@ def parse_sold_listing_cards_with_context(html: str) -> EbayPageParseResult:
         page_kind=page_kind,
         summary=summary,
         debug_html_path=debug_html_path,
+        fetched_url=fetched_url,
     )
