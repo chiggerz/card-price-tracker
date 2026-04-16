@@ -11,7 +11,7 @@ import json
 import logging
 import os
 import re
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 
 
 @dataclass(frozen=True)
@@ -162,6 +162,23 @@ def _normalize_sold_date(sold_date_text: str | None) -> str | None:
         return None
     normalized = sold_date_text.replace("Sold", "").replace("on", "").strip(" :-")
     return normalized or None
+
+
+def _clean_html_text(value: str) -> str:
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", unescape(value))).strip()
+
+
+def _normalize_ebay_url(url: str | None) -> str | None:
+    if not url:
+        return None
+    normalized = unescape(url).strip().replace("\\/", "/")
+    if normalized.startswith("//"):
+        return f"https:{normalized}"
+    if normalized.startswith("/"):
+        return f"https://www.ebay.com{normalized}"
+    if normalized.startswith("http"):
+        return normalized
+    return None
 
 
 def _extract_embedded_json_payloads(html: str) -> list[tuple[str, object]]:
@@ -365,7 +382,7 @@ def _save_debug_html(html: str, reason: str) -> str | None:
 
     debug_dir = Path(os.getenv("EBAY_SCRAPER_DEBUG_DIR", ".debug/ebay_scrape_html"))
     debug_dir.mkdir(parents=True, exist_ok=True)
-    timestamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     digest = hashlib.sha1(html.encode("utf-8", errors="ignore")).hexdigest()[:10]
     reason_slug = re.sub(r"[^a-z0-9]+", "-", reason.lower()).strip("-") or "parse-failure"
     file_path = debug_dir / f"{timestamp}-{reason_slug}-{digest}.html"
@@ -383,6 +400,79 @@ def _extract_raw_cards(html: str) -> list[dict[str, str]]:
     cards = parser.results
     if cards:
         return cards
+
+    anchor_cards: list[dict[str, str]] = []
+    seen_anchor_keys: set[str] = set()
+    anchor_pattern = re.compile(
+        r'<a[^>]+href="([^"]*(?:/itm/|itm/)[^"]*)"[^>]*>(.*?)</a>',
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    for anchor_match in anchor_pattern.finditer(html):
+        raw_url = anchor_match.group(1)
+        normalized_url = _normalize_ebay_url(raw_url)
+        if not normalized_url:
+            continue
+
+        start, end = anchor_match.span()
+        context_start = max(0, start - 2000)
+        context_end = min(len(html), end + 3500)
+        block = html[context_start:context_end]
+
+        anchor_title = _clean_html_text(anchor_match.group(2))
+        title_match = re.search(
+            r'class="[^"]*(?:s-item__title|s-card__title)[^"]*"[^>]*>(.*?)</(?:div|span|h3|a)>',
+            block,
+            flags=re.IGNORECASE | re.DOTALL,
+        )
+        title = _clean_html_text(title_match.group(1)) if title_match else anchor_title
+        if not title or title.lower() in {"shop on ebay", "new listing"}:
+            continue
+
+        price_match = re.search(
+            r'class="[^"]*(?:s-item__price|s-card__price|s-card__attribute-text|x-price-primary)[^"]*"[^>]*>(.*?)</(?:div|span)>',
+            block,
+            flags=re.IGNORECASE | re.DOTALL,
+        )
+        if not price_match:
+            price_match = re.search(
+                r'([\$£€]\s?[0-9][0-9,]*(?:\.[0-9]{2})?)',
+                block,
+                flags=re.IGNORECASE,
+            )
+        price_text = _clean_html_text(price_match.group(1)) if price_match else ""
+
+        sold_match = re.search(
+            r'(?:sold|ended)\s+(?:on\s+)?([A-Za-z]{3,9}\s+\d{1,2},?\s+\d{4})',
+            block,
+            flags=re.IGNORECASE,
+        )
+        image_match = re.search(
+            r'<img[^>]+(?:src|data-src|data-lazy)="([^"]+)"',
+            block,
+            flags=re.IGNORECASE,
+        )
+
+        item: dict[str, str] = {
+            "title": title,
+            "url": normalized_url,
+        }
+        if price_text:
+            item["price_text"] = price_text
+        if sold_match:
+            item["sold_date"] = sold_match.group(1).strip()
+        if image_match:
+            normalized_image = _normalize_ebay_url(image_match.group(1))
+            if normalized_image:
+                item["image_url"] = normalized_image
+
+        dedupe_key = f"{item.get('title','').lower()}|{item.get('url','').lower()}"
+        if dedupe_key in seen_anchor_keys:
+            continue
+        seen_anchor_keys.add(dedupe_key)
+        anchor_cards.append(item)
+
+    if anchor_cards:
+        return anchor_cards
 
     fallback_cards: list[dict[str, str]] = []
     card_patterns = [
@@ -453,6 +543,7 @@ def _extract_raw_cards(html: str) -> list[dict[str, str]]:
 
 def parse_sold_listing_cards(html: str) -> list[EbayScrapedListing]:
     normalized: list[EbayScrapedListing] = []
+    seen_keys: set[str] = set()
     for item in _extract_raw_cards(html):
         title = item.get("title", "").strip()
         if not title or title.lower() in {"shop on ebay", "new listing"}:
@@ -460,16 +551,25 @@ def parse_sold_listing_cards(html: str) -> list[EbayScrapedListing]:
 
         price, parsed_currency = _extract_first_price(item.get("price_text", ""))
         currency = item.get("currency", "").strip().upper() or parsed_currency
+
+        normalized_url = _normalize_ebay_url(item.get("url"))
+        normalized_image = _normalize_ebay_url(item.get("image_url"))
+
         if price is None:
             continue
+
+        dedupe_key = f"{title.lower()}|{price}|{(normalized_url or '').lower()}"
+        if dedupe_key in seen_keys:
+            continue
+        seen_keys.add(dedupe_key)
 
         normalized.append(
             EbayScrapedListing(
                 title=title,
                 price=price,
                 sold_date=_normalize_sold_date(item.get("sold_date")),
-                url=item.get("url") or None,
-                image_url=item.get("image_url") or None,
+                url=normalized_url,
+                image_url=normalized_image,
                 source="ebay_sold_scrape",
                 currency=currency,
             )

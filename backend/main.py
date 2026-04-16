@@ -16,6 +16,7 @@ from backend.ebay_client import EbayConfigurationError
 from backend.listing_providers import get_listing_provider, live_data_status_message
 from backend.parser import parse_card_query
 from backend.matcher import match_candidates
+from backend.ebay_query_builder import build_ebay_search_query
 
 app = FastAPI()
 app.add_middleware(
@@ -67,10 +68,11 @@ def empty_grouped_results() -> dict[str, list[dict]]:
     }
 
 
-def fetch_and_match(parsed_query: dict, ebay_query: str) -> tuple[list[dict], str | None]:
+def fetch_and_match(parsed_query: dict, raw_query: str) -> tuple[list[dict], str | None]:
     status_message = live_data_status_message()
     try:
         provider = get_listing_provider()
+        ebay_query = build_ebay_search_query(raw_query=raw_query, parsed_query=parsed_query)
         provider_result = provider.search_sold_items(ebay_query)
     except EbayConfigurationError as exc:
         return [], status_message or str(exc)
