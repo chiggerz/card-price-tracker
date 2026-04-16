@@ -321,6 +321,20 @@ def _extract_cards_from_embedded_data(html: str) -> list[dict[str, str]]:
     return extracted_cards
 
 
+def _has_listing_signals(html: str) -> bool:
+    lower = html.lower()
+    listing_markers = [
+        "srp-river-results",
+        "srp-results",
+        "s-item",
+        "s-card__title",
+        "itemid",
+        "/itm/",
+        "i.ebayimg.com",
+    ]
+    return any(marker in lower for marker in listing_markers)
+
+
 def _classify_page_kind(html: str) -> tuple[str, str]:
     lower = html.lower()
     if "captcha" in lower or "robot check" in lower or "automated access" in lower:
@@ -329,18 +343,16 @@ def _classify_page_kind(html: str) -> tuple[str, str]:
         return "consent", "eBay returned a consent/privacy interstitial page."
     if "ebay" not in lower or "<html" not in lower:
         return "non_results", "Response does not appear to be a normal eBay HTML page."
+    if _extract_cards_from_embedded_data(html):
+        return "results", "Detected embedded sold/completed result payloads in page scripts."
+    if _has_listing_signals(html):
+        return "results", "Detected eBay listing/result markup markers."
     if (
         "no exact matches found" in lower
         or "0 results for" in lower
         or "did not match any items" in lower
     ):
-        if _extract_cards_from_embedded_data(html):
-            return "results", "Detected embedded sold/completed result payloads in page scripts."
         return "empty_results", "eBay results page indicates no sold/completed matches."
-    if _extract_cards_from_embedded_data(html):
-        return "results", "Detected embedded sold/completed result payloads in page scripts."
-    if "s-item" in lower or "srp-results" in lower or "_item" in lower:
-        return "results", "Detected eBay results-page markers."
     if "bos-items__loader" in lower or "bos-items" in lower:
         return "results", "Detected newer eBay results shell markers (bos-items)."
     return "unknown_ebay", "Detected eBay page, but results markup markers were not found."
@@ -376,22 +388,24 @@ def _extract_raw_cards(html: str) -> list[dict[str, str]]:
     card_patterns = [
         r"<li[^>]+class=\"[^\"]*\bs-item\b[^\"]*\"[^>]*>.*?</li>",
         r"<div[^>]+class=\"[^\"]*\bs-item__wrapper\b[^\"]*\"[^>]*>.*?</div>",
+        r"<article[^>]+class=\"[^\"]*\bs-card\b[^\"]*\"[^>]*>.*?</article>",
+        r"<div[^>]+class=\"[^\"]*\bsrp-river-results\b[^\"]*\"[^>]*>.*?</div>",
     ]
     for pattern in card_patterns:
         for match in re.finditer(pattern, html, flags=re.IGNORECASE | re.DOTALL):
             block = match.group(0)
             title_match = re.search(
-                r'class="[^"]*s-item__title[^"]*"[^>]*>(.*?)<',
+                r'class="[^"]*(?:s-item__title|s-card__title)[^"]*"[^>]*>(.*?)<',
                 block,
                 flags=re.IGNORECASE | re.DOTALL,
             )
             price_match = re.search(
-                r'class="[^"]*s-item__price[^"]*"[^>]*>(.*?)<',
+                r'class="[^"]*(?:s-item__price|s-card__price|s-card__attribute-text)[^"]*"[^>]*>(.*?)<',
                 block,
                 flags=re.IGNORECASE | re.DOTALL,
             )
             href_match = re.search(
-                r'class="[^"]*s-item__link[^"]*"[^>]*href="([^"]+)"',
+                r'(?:class="[^"]*(?:s-item__link|s-card__image|s-card__title-link)[^"]*"[^>]*href="([^"]+)"|href="([^"]*?/itm/[^"]+)"|\"url\"\s*:\s*\"(https?://[^\"]*?/itm/[^\"]+)\")',
                 block,
                 flags=re.IGNORECASE,
             )
@@ -401,7 +415,12 @@ def _extract_raw_cards(html: str) -> list[dict[str, str]]:
                 flags=re.IGNORECASE,
             )
             image_match = re.search(
-                r'<img[^>]+(?:src|data-src|data-lazy)="([^"]+)"',
+                r'(?:<img[^>]+(?:src|data-src|data-lazy)="([^"]+)"|\"image(?:Url|_url)?\"\s*:\s*\"(https?://i\.ebayimg\.com/[^\"]+)\")',
+                block,
+                flags=re.IGNORECASE,
+            )
+            item_id_match = re.search(
+                r'(?:\bitemid\b\s*[:=]\s*["\']?(\d{8,15})["\']?|/itm/(?:[^/]+/)?(\d{8,15})|\"itemId\"\s*:\s*\"?(\d{8,15})\"?)',
                 block,
                 flags=re.IGNORECASE,
             )
@@ -411,11 +430,19 @@ def _extract_raw_cards(html: str) -> list[dict[str, str]]:
             if price_match:
                 item["price_text"] = re.sub(r"<[^>]+>", " ", price_match.group(1)).strip()
             if href_match:
-                item["url"] = href_match.group(1).strip()
+                href = next((group for group in href_match.groups() if group), "")
+                if href:
+                    item["url"] = href.strip().replace("\\/", "/")
             if sold_match:
                 item["sold_date"] = sold_match.group(1).strip()
             if image_match:
-                item["image_url"] = image_match.group(1).strip()
+                image = next((group for group in image_match.groups() if group), "")
+                if image:
+                    item["image_url"] = image.strip().replace("\\/", "/")
+            if item_id_match and "url" not in item:
+                item_id = next((group for group in item_id_match.groups() if group), "")
+                if item_id:
+                    item["url"] = f"https://www.ebay.com/itm/{item_id}"
             if item:
                 fallback_cards.append(item)
         if fallback_cards:
